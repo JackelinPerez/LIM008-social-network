@@ -1,7 +1,7 @@
- /*export const createPostFireStore = (idCollection, idCollectionPost, idUser, idPost, key, value) => {
+export const createPostFireStore = (idCollection, idCollectionPost, idUser, idPost, key, value) => {
   return firebase.firestore().collection(idCollection).doc(idUser)
-    .collection(idCollectionPost).doc(idPost).set({[key]: value}, { merge: true});
-}; */
+    .collection(idCollectionPost).doc(idPost).set({ [key]: value }, { merge: true });
+};
 //--------------------------------------------------------------------------------------------------
 /*objPost = {
    "idUser" : "",
@@ -37,3 +37,8 @@ export const deletePostFireStore = (idCollection, idCollectionPost, idUser, idPo
     .catch((err) => console.log('error eliminando Collection= ' + err.message));
 };
 
+export const sendImagePost = (imageASubir) => {
+  console.log("////////////////////////")
+  console.log(imageASubir)
+  return firebase.storage().ref().child('images/' + imageASubir.name).put(imageASubir);
+}

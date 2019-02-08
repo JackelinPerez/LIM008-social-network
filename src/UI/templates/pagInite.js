@@ -1,4 +1,4 @@
-import {registerOnSubmit, accesWithFbOrGoogle, loginUser} from '../view-controller.js';
+import {sendToPageOfRegister, accesWithFbOrGoogle, sendToPageOfInite} from '../view-controller.js';
 
 export default () => {
   const container = document.getElementById('container');
@@ -26,8 +26,8 @@ export default () => {
   const buttonGoogle = document.getElementById('buttonGoogle');
 
 
-  loginUser(buttonLogin);
-  registerOnSubmit(buttonRegister);
+  sendToPageOfInite(buttonLogin);
+  sendToPageOfRegister(buttonRegister);
   accesWithFbOrGoogle(buttonFacebook, buttonGoogle);
   
   return 1;

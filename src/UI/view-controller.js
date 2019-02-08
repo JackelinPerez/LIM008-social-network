@@ -14,6 +14,74 @@ const changeHash = (hash) => {
   location.hash = hash;
 };
 
+export const sendToPageOfRegister = (buttonRegister) => {
+  buttonRegister.addEventListener('click', () => {
+    changeHash('/pagRegister') ;
+  });
+};// preguntar si esta bien asì o es mejor poner un href
+
+export const sendToPageOfInite = (buttonLogin) => {
+  buttonLogin.addEventListener('click', () => {
+    changeHash('/pagIniteSesion');
+  }); 
+};
+
+export const btnAcceptRegisterAndSendToHome = (userName, userEmail, userPassword, buttonAcept) => {
+  buttonAcept.addEventListener('click', () => {
+    createUser(userEmail.value, userPassword.value)
+      .then((result) => {
+        let objctCreate = objectCreateUserProfile(userName.value, result.user.email, '.png', getDayAndHour());
+
+        alert(`Se te ha enviado un mensaje de correo electronico:${result.user.email}
+          Por favor de verificarlo para terminar con el proceso! Gracias`);
+
+        const config = {
+          url: 'http://localhost:8887/src'
+        };
+        // sendEmail(config)
+        result.user.sendEmailVerification(config)
+          .catch((err) => {
+            alert(err.message);
+          });
+
+        Object.keys(objctCreate).forEach((ele) => {
+          createUserFireStore('Users', result.user.email, ele, objctCreate[ele])
+            .then(() => console.log('documento se escribio correctamente'))
+            .catch(() => console.log(err.message));
+        });
+        changeHash('/home') ;
+      })
+      .catch((err) => {
+        console.log(err.code);
+        console.log(err.credential);
+        alert(err.message !== undefined ? err.message : err.email);  
+      });  
+  });
+};
+
+
+
+export const btnAcceptLoginAndSendToHome = (inputEmail, inputPassword, buttonAcceptLogin) => {
+  buttonAcceptLogin.addEventListener('click', () => {
+    logInUser(inputEmail.value, inputPassword.value)
+      .then(() => {
+        changeHash('/home') ;        
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });    
+  });
+};
+
+export const accesWithFbOrGoogle = (buttonFacebook, buttonGoogle) => {
+  buttonFacebook.addEventListener('click', () => {
+    detectPromisesCreateUser(authenticateFacebook());
+  });
+  buttonGoogle.addEventListener('click', () => {
+    detectPromisesCreateUser(authenticateGoogle());
+  });
+};
+
 const getDayAndHour = () => {
   let h, m, s; 
 
@@ -199,71 +267,7 @@ const detectPromisesCreateUser = (funct) => {
     });
 };
 
-export const registerOnSubmit = (buttonRegister) => {
-  buttonRegister.addEventListener('click', () => {
-    changeHash('/pagRegister') ;
-  });
-};
 
-export const btnAcceptRegisterAndSendToHome = (userName, userEmail, userPassword, buttonAcept) => {
-  buttonAcept.addEventListener('click', () => {
-    createUser(userEmail.value, userPassword.value)
-      .then((result) => {
-        let objctCreate = objectCreateUserProfile(userName.value, result.user.email, '.png', getDayAndHour());
-
-        alert(`Se te ha enviado un mensaje de correo electronico:${result.user.email}
-          Por favor de verificarlo para terminar con el proceso! Gracias`);
-
-        const config = {
-          url: 'http://localhost:8887/src'
-        };
-        // sendEmail(config)
-        result.user.sendEmailVerification(config)
-          .catch((err) => {
-            alert(err.message);
-          });
-
-        Object.keys(objctCreate).forEach((ele) => {
-          createUserFireStore('Users', result.user.email, ele, objctCreate[ele])
-            .then(() => console.log('documento se escribio correctamente'))
-            .catch(() => console.log(err.message));
-        });
-        changeHash('/home') ;
-      })
-      .catch((err) => {
-        console.log(err.code);
-        console.log(err.credential);
-        alert(err.message !== undefined ? err.message : err.email);  
-      });  
-  });
-};
-
-export const loginUser = (buttonLogin) => {
-  buttonLogin.addEventListener('click', () => {
-    changeHash('/pagIniteSesion');
-  }); 
-};
-
-export const btnAcceptLoginAndSendToHome = (inputEmail, inputPassword, buttonAcceptLogin) => {
-  buttonAcceptLogin.addEventListener('click', () => {
-    logInUser(inputEmail.value, inputPassword.value)
-      .then(() => {
-        changeHash('/home') ;        
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });    
-  });
-};
-
-export const accesWithFbOrGoogle = (buttonFacebook, buttonGoogle) => {
-  buttonFacebook.addEventListener('click', () => {
-    detectPromisesCreateUser(authenticateFacebook());
-  });
-  buttonGoogle.addEventListener('click', () => {
-    detectPromisesCreateUser(authenticateGoogle());
-  });
-};
 
 // const pruebasPost () =>{
 // // Ejemplo Eliminando Post

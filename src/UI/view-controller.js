@@ -1,5 +1,8 @@
 // import { logInUser } from '../lib/auth/logInUser.js';
-import { createPostByUser } from '../lib/crudBd/crudPost/crudPost.js';
+
+//Se importaron nuestra funiones que reutilizaremos.
+import { createPostByUser, sendImagePost } from '../lib/crudBd/crudPost/crudPost.js';
+
 import {
   createUser, authenticateFacebook, authenticateGoogle, logInUser, logOutUser,
   sendEmail, userStateChange, dataConnectUser
@@ -9,7 +12,7 @@ import {
 import { createUserFireStore, readUserFireStore, updateUserFireStore, deleteUserFireStore }
   from '../lib/crudBD/crudUser/crudUser.js';
 
-import { readPostFireStore, readDocPostFireStore, deletePostFireStore, updatePostFireStore } from '../lib/crudBD/crudPost/crudPost.js';
+import { createPostFireStore, readPostFireStore, readDocPostFireStore, deletePostFireStore, updatePostFireStore } from '../lib/crudBD/crudPost/crudPost.js';
 import post from './templates/post.js';
 
 const changeHash = (hash) => {
@@ -76,6 +79,8 @@ export const createPost = (userPhoto, userName, postType,
   descriptionPost, multimedia, postPrivacy, savePublicPost, closePost) => {
   let userConnect = dataConnectUser().email;
   console.log('Usuario conectado es: ' + userConnect);
+
+
   readUserFireStore('Users', userConnect)
     .then((respDoc) => {
       const saveDocumentUser = respDoc.data();
@@ -85,37 +90,70 @@ export const createPost = (userPhoto, userName, postType,
       }
 
       savePublicPost.addEventListener('click', () => {
-        const postPrivacyValue = postPrivacy.options[postPrivacy.selectedIndex].value;
-        const postTypeValue = postType.options[postType.selectedIndex].value;
-
-        console.log('postPrivacyValue: ' + postPrivacyValue + '; postTypeValue: ' + postTypeValue);
 
 
-        let objDataUser = {};
-        // contador de post
-        let contPost = 0;
 
-        readPostFireStore('Users', 'Post', userConnect)
-          .then((result) => {
-            contPost = '#' + (result.size + 1).toString();
-            objDataUser = objectCreatePost(postPrivacyValue, postTypeValue, descriptionPost.value, '', getDayAndHour(), contPost);
+        //----------------------------Antes de registrar un nuevo post tenemos que subir la imagen y obtener la URL-------------------------------------------
+        //------------------------------------Inicio----------------------------------------------------
+        let file = multimedia.files[0];
+        //Subimos el archivo a firebase
+        sendImagePost(file).then((snapshot) => {
+          //reusamod el objeto que nos retorna la promesa pra generar la URL.
+          snapshot.ref.getDownloadURL().then((getURL) => {
+          // getURL lo usaremos al registrar
+          //----------------------------------------------------------------------------------------
 
-            console.log(objDataUser);
+            
+            const postPrivacyValue = postPrivacy.options[postPrivacy.selectedIndex].value;
+            const postTypeValue = postType.options[postType.selectedIndex].value;
 
-            Object.keys(objDataUser).forEach((ele) => {
-              createPostFireStore('Users', 'Post', userConnect, contPost, ele, objDataUser[ele])
-                .then(() => console.log('documento se escribio correctamente en post'))
-                .catch(() => console.log(err.message));
-            });
+            console.log('postPrivacyValue: ' + postPrivacyValue + '; postTypeValue: ' + postTypeValue);
+
+
+            let objDataUser = {};
+            // contador de post
+            let contPost = 0;
+
+            readPostFireStore('Users', 'Post', userConnect)
+              .then((result) => {
+                contPost = '#' + (result.size + 1).toString();
+
+                //se agrego getURL <- es resultado de nuestra promesa.
+                objDataUser = objectCreatePost(postPrivacyValue, postTypeValue, descriptionPost.value, getURL, getDayAndHour(), contPost);
+
+                console.log(objDataUser);
+
+                Object.keys(objDataUser).forEach((ele) => {
+                  createPostFireStore('Users', 'Post', userConnect, contPost, ele, objDataUser[ele])
+                    .then(() => console.log('documento se escribio correctamente en post'))
+                    .catch(() => console.log(err.message));
+                });
+              })
+              .catch((err) => {
+                console.log('ERRos: ' + err.message);
+              });
+
+
+          //----------------------------------------------------------------------------------------
           })
-          .catch((err) => {
-            console.log('ERRos: ' + err.message);
-          });
+          //----------------------------------------------------------------------------------------
+        
+        }).catch((err) => {
+          alert(err)
+        });
+
       });
     })
+
+
     .catch((err) => {
       console.log(err.message);
     });
+
+
+
+
+
 };
 
 export const mainRedSocial = (userPhoto, userName, buttonDeleteUser, buttonLogOut, createPost) => {

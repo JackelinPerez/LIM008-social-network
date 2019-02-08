@@ -59,8 +59,6 @@ export const btnAcceptRegisterAndSendToHome = (userName, userEmail, userPassword
   });
 };
 
-
-
 export const btnAcceptLoginAndSendToHome = (inputEmail, inputPassword, buttonAcceptLogin) => {
   buttonAcceptLogin.addEventListener('click', () => {
     logInUser(inputEmail.value, inputPassword.value)
@@ -107,36 +105,37 @@ const getDayAndHour = () => {
   
   const fechaYhora = day + ' ' + months[month] + ' ' + yy + ' a las ' + h + ':' + m + ':' + s;
   return fechaYhora;
-};
+};//newDate
   
-const objectCreateUserProfile = (usuario, correo, foto, userCreateDay) => {
+const objectCreateUserProfile = (user, email, photo, userCreateDay) => {
   const objectUserProfile = {};
   objectUserProfile.fecha = userCreateDay;
-  objectUserProfile.usuario = usuario;
-  objectUserProfile.correo = correo;
-  objectUserProfile.foto = foto;
-  objectUserProfile.estado = '';
-  objectUserProfile.edad = '';
+  objectUserProfile.user = user;
+  objectUserProfile.email = email;
+  objectUserProfile.photo = photo;
+  objectUserProfile.status = '';
+  objectUserProfile.age = '';
   return objectUserProfile;
-};
+};// es bueno esto o es mejor agregar defrente?
 
-const objectCreatePost = (privacidad, categoria, descripcion, multimedia, postCreateDay, idPost) => {
+const objectCreatePost = (privacy, category, description, multimedia, postCreateDay, idPost) => {
   const objectPost = {};
   objectPost.id = idPost;
-  objectPost.fecha = postCreateDay;
-  objectPost.privacidad = privacidad;
-  objectPost.categoria = categoria;
-  objectPost.contenido = {
-    descripcion: descripcion,
+  objectPost.date = postCreateDay;
+  objectPost.privacy = privacy;
+  objectPost.category = category;
+  objectPost.content = {
+    description: description,
     multimedia: multimedia,
   };
   objectPost.likes = 0;
-  objectPost.comentarios = {
-    quienComento: '',
+  objectPost.comments = {
+    whoComment: '',
     likes: 0,
   };
   return objectPost;
 };
+
 
 export const createPost = (userPhoto, userName, postType, 
   descriptionPost, multimedia, postPrivacy, savePublicPost, closePost) => {
@@ -146,8 +145,8 @@ export const createPost = (userPhoto, userName, postType,
     .then((respDoc) => {
       const saveDocumentUser = respDoc.data();
       if (saveDocumentUser !== undefined) {
-        userPhoto.src = saveDocumentUser.foto;
-        userName.innerHTML = saveDocumentUser.usuario;
+        userPhoto.src = saveDocumentUser.photo;
+        userName.innerHTML = saveDocumentUser.user;
       }
 
       savePublicPost.addEventListener('click', () => {

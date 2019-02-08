@@ -4,7 +4,7 @@ export default () => {
   const container = document.getElementById('container');
   const divContent = `
     <input type="image" src="" id= "userPhoto" width="80" height="100" alt="Login"></input><br>
-    <label id= "userName"></label>
+    <label id= "userName" ></label>
 
     <h6 class="post-tittle-categoria">Categoría</h6>
     <select id = "postType">

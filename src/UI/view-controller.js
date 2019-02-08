@@ -1,13 +1,15 @@
 // import { logInUser } from '../lib/auth/logInUser.js';
-
-import { createUser, authenticateFacebook, authenticateGoogle, logInUser, logOutUser,
-  sendEmail, userStateChange, dataConnectUser} 
+import { createPostByUser } from '../lib/crudBd/crudPost/crudPost.js';
+import {
+  createUser, authenticateFacebook, authenticateGoogle, logInUser, logOutUser,
+  sendEmail, userStateChange, dataConnectUser
+}
   from '../lib/authBD/authFireBase.js';
 
-import { createUserFireStore, readUserFireStore, updateUserFireStore, deleteUserFireStore}
+import { createUserFireStore, readUserFireStore, updateUserFireStore, deleteUserFireStore }
   from '../lib/crudBD/crudUser/crudUser.js';
 
-import {createPostFireStore, readPostFireStore, readDocPostFireStore, deletePostFireStore, updatePostFireStore} from '../lib/crudBD/crudPost/crudPost.js';
+import { readPostFireStore, readDocPostFireStore, deletePostFireStore, updatePostFireStore } from '../lib/crudBD/crudPost/crudPost.js';
 import post from './templates/post.js';
 
 const changeHash = (hash) => {
@@ -15,32 +17,32 @@ const changeHash = (hash) => {
 };
 
 const getDayAndHour = () => {
-  let h, m, s; 
+  let h, m, s;
 
   const checkTime = (i) => {
     if (i < 10) i = '0' + i;
     return i;
   };
-  
+
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
     'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-  
+
   const date = new Date();
-  
+
   const day = date.getDate();
   const month = date.getMonth() + 1;
   const yy = date.getFullYear();
-  
+
   h = date.getHours();
   m = date.getMinutes();
   s = date.getSeconds();
   m = checkTime(m);
   s = checkTime(s);
-  
+
   const fechaYhora = day + ' ' + months[month] + ' ' + yy + ' a las ' + h + ':' + m + ':' + s;
   return fechaYhora;
 };
-  
+
 const objectCreateUserProfile = (usuario, correo, foto, userCreateDay) => {
   const objectUserProfile = {};
   objectUserProfile.fecha = userCreateDay;
@@ -70,7 +72,7 @@ const objectCreatePost = (privacidad, categoria, descripcion, multimedia, postCr
   return objectPost;
 };
 
-export const createPost = (userPhoto, userName, postType, 
+export const createPost = (userPhoto, userName, postType,
   descriptionPost, multimedia, postPrivacy, savePublicPost, closePost) => {
   let userConnect = dataConnectUser().email;
   console.log('Usuario conectado es: ' + userConnect);
@@ -87,7 +89,7 @@ export const createPost = (userPhoto, userName, postType,
         const postTypeValue = postType.options[postType.selectedIndex].value;
 
         console.log('postPrivacyValue: ' + postPrivacyValue + '; postTypeValue: ' + postTypeValue);
-        
+
 
         let objDataUser = {};
         // contador de post
@@ -97,13 +99,13 @@ export const createPost = (userPhoto, userName, postType,
           .then((result) => {
             contPost = '#' + (result.size + 1).toString();
             objDataUser = objectCreatePost(postPrivacyValue, postTypeValue, descriptionPost.value, '', getDayAndHour(), contPost);
-              
+
             console.log(objDataUser);
-          
+
             Object.keys(objDataUser).forEach((ele) => {
               createPostFireStore('Users', 'Post', userConnect, contPost, ele, objDataUser[ele])
                 .then(() => console.log('documento se escribio correctamente en post'))
-                .catch(() => console.log(err.message));                
+                .catch(() => console.log(err.message));
             });
           })
           .catch((err) => {
@@ -123,7 +125,7 @@ export const mainRedSocial = (userPhoto, userName, buttonDeleteUser, buttonLogOu
     // Evaluar estado del usuario
 
     let userConnect = dataConnectUser().email;
-    
+
     console.log('Usuario conectado es: ' + userConnect);
 
     readUserFireStore('Users', userConnect)
@@ -142,20 +144,20 @@ export const mainRedSocial = (userPhoto, userName, buttonDeleteUser, buttonLogOu
       logOutUser()
         .then(() => {
           console.log('Usuario fuera de session');
-          changeHash('/inite') ;
+          changeHash('/inite');
         })
         .catch((err) => {
           console.log(err.message);
-        }); 
+        });
     });
 
     buttonDeleteUser.addEventListener('click', () => {
       deleteUserFireStore('Users', userConnect);
-      changeHash('/inite') ;
+      changeHash('/inite');
     });
 
     createPost.addEventListener('click', () => {
-      changeHash('/createPost') ;
+      changeHash('/createPost');
     });
   } else {
     console.log('Usuario No conectado');
@@ -174,17 +176,17 @@ const detectPromisesCreateUser = (funct) => {
             const dataUser = result.user;
 
             objDataUser = objectCreateUserProfile(dataUser.displayName, dataUser.email, dataUser.photoURL, getDayAndHour());
-            
+
             console.log(objDataUser);
-            
+
             Object.keys(objDataUser).forEach((ele) => {
               createUserFireStore('Users', objDataUser.correo, ele, objDataUser[ele])
                 .then(() => console.log('documento se escribio correctamente'))
-                .catch(() => console.log(err.message));                
-            }); 
+                .catch(() => console.log(err.message));
+            });
           } else console.log('Usuario ya existe en la BD');
 
-          changeHash('/home') ;
+          changeHash('/home');
         })
         .catch((err) => {
           console.log(err.message);
@@ -194,14 +196,14 @@ const detectPromisesCreateUser = (funct) => {
       console.log(err.code);
       console.log(err.credential);
       console.log('cayo en error: detectPromisesCreateUser');
-      
+
       alert(err.message !== undefined ? err.message : err.email);
     });
 };
 
 export const registerOnSubmit = (buttonRegister) => {
   buttonRegister.addEventListener('click', () => {
-    changeHash('/pagRegister') ;
+    changeHash('/pagRegister');
   });
 };
 
@@ -228,31 +230,31 @@ export const btnAcceptRegisterAndSendToHome = (userName, userEmail, userPassword
             .then(() => console.log('documento se escribio correctamente'))
             .catch(() => console.log(err.message));
         });
-        changeHash('/home') ;
+        changeHash('/home');
       })
       .catch((err) => {
         console.log(err.code);
         console.log(err.credential);
-        alert(err.message !== undefined ? err.message : err.email);  
-      });  
+        alert(err.message !== undefined ? err.message : err.email);
+      });
   });
 };
 
 export const loginUser = (buttonLogin) => {
   buttonLogin.addEventListener('click', () => {
     changeHash('/pagIniteSesion');
-  }); 
+  });
 };
 
 export const btnAcceptLoginAndSendToHome = (inputEmail, inputPassword, buttonAcceptLogin) => {
   buttonAcceptLogin.addEventListener('click', () => {
     logInUser(inputEmail.value, inputPassword.value)
       .then(() => {
-        changeHash('/home') ;        
+        changeHash('/home');
       })
       .catch((err) => {
         console.log(err.message);
-      });    
+      });
   });
 };
 
@@ -290,3 +292,36 @@ export const accesWithFbOrGoogle = (buttonFacebook, buttonGoogle) => {
 
 
 // pruebasPost();
+
+var fichero = document.getElementById("fichero");
+console.log("-----------------")
+fichero.addEventListener("change", () => {
+
+  let imageASubir = fichero.files[0];
+  var uploadTask = firebase.storage().ref().child('images/' + imageASubir.name).put(imageASubir).then((snapshot) => {
+    snapshot.ref.getDownloadURL().then((getURL) => {
+
+
+      createPostByUser({
+        "idUser": dataConnectUser().email,
+        "tittle": "redes Inalambricas",
+        "urlImage": getURL,
+        "description": "las resdes inalambricas estan en todas partes del mundo."
+      }).then(function (result) {
+        console.log("----------------------CORRECTO")
+        console.log(result)
+      }).catch(function (err) {
+        console.log("----------------------ERROR firebase.firestore().collection() linea 26 mainJS")
+        console.log(err)
+      });
+
+
+    })
+  }).catch((err) => {
+    alert(err)
+  });
+
+
+  /*  */
+
+}, false);

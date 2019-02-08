@@ -16,7 +16,8 @@ export default () => {
         <option value="Curiosidades">Curiosidades</option>
     </select>
     <h7 class="tittle-of-post">Titulo</h7>
-    <button id= "multimedia">+</button>
+    <!-- <button id= "multimedia" >+</button> -->
+    <input type="file" id="multimedia" name="multimedia"/>
     <input id = "descriptionPost" placeholder="Escribe aquí" type="text"></input>
     <select id = "postPrivacy">
         <option value="amigos">Amigos</option>

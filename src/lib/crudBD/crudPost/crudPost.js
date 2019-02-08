@@ -1,12 +1,23 @@
-export const createPostFireStore = (idCollection, idCollectionPost, idUser, idPost, key, value) => {
+ /*export const createPostFireStore = (idCollection, idCollectionPost, idUser, idPost, key, value) => {
   return firebase.firestore().collection(idCollection).doc(idUser)
     .collection(idCollectionPost).doc(idPost).set({[key]: value}, { merge: true});
+}; */
+//--------------------------------------------------------------------------------------------------
+/*objPost = {
+   "idUser" : "",
+   "tittle": " ",
+   "urlImage": "";
+   "description": "";
+ }*/
+export const createPostByUser = (objPost) => {
+  return firebase.firestore().collection('Post').add(objPost);
 };
+
 // obtenemos la informacion completa de la collecion "post"
 export const readPostFireStore = (idCollection, idCollectionPost, idUser) => {
-    return firebase.firestore().collection(idCollection).doc(idUser)
-      .collection(idCollectionPost).get();
-  };
+  return firebase.firestore().collection(idCollection).doc(idUser)
+    .collection(idCollectionPost).get();
+};
 
 // obtiene un campo especifico del post
 export const readDocPostFireStore = (idCollection, idCollectionPost, idUser, idPost) => {
@@ -16,7 +27,7 @@ export const readDocPostFireStore = (idCollection, idCollectionPost, idUser, idP
 
 export const updatePostFireStore = (idCollection, idCollectionPost, idUser, idPost, key, value) => {
   return firebase.firestore().collection(idCollection).doc(idUser)
-    .collection(idCollectionPost).doc(idPost).update({[key]: value});
+    .collection(idCollectionPost).doc(idPost).update({ [key]: value });
 };
 
 export const deletePostFireStore = (idCollection, idCollectionPost, idUser, idPost) => {
@@ -25,3 +36,4 @@ export const deletePostFireStore = (idCollection, idCollectionPost, idUser, idPo
     .then(() => console.log('Se elimino correctamente el Blog'))
     .catch((err) => console.log('error eliminando Collection= ' + err.message));
 };
+

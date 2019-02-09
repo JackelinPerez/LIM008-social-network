@@ -36,8 +36,6 @@ const paintHeader = (hash) => {
           <a href="#/misPosts">Mis Posts</a>
         </nav>
       </div>` : null}
-   </div>
-  `;
   header.innerHTML = headerHTML;
   return header;
 };

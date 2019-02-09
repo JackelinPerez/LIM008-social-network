@@ -2,13 +2,12 @@ import Inite from './templates/pagInite.js';
 import Login from './templates/pagLogin.js';
 import Register from './templates/pagRegister.js';
 import Home from './templates/home.js';
-// import { accesWithFbOrGoogle, btnAcceptLoginAndSendToHome
-//   , btnAcceptRegisterAndSendToHome } from './view-controller.js';
+import Post from './templates/post.js';
 
 const changeTmp = (hash) => {
   if (hash === '#/' || hash === '' || hash === '#') {
     return viewTmp('#/inite');
-  } else if (hash === '#/pagIniteSesion' || hash === '#/pagRegister' || hash === '#/home') {
+  } else if (hash === '#/pagIniteSesion' || hash === '#/pagRegister' || hash === '#/home' || hash === '#/createPost') {
     return viewTmp(hash);
   } else {
     return viewTmp('#/inite');
@@ -17,27 +16,23 @@ const changeTmp = (hash) => {
 
 const viewTmp = (routers) => {
   const router = routers.substr(2, routers.length - 2);
-  const container = document.getElementById('container');
+  const container = document.getElementById('container');    
+  // const headerContainer = document.getElementById('header-container');
+  // headerContainer.innerHTML = paintHeader(router);
   container.innerHTML = '';
   switch (router) {
   case 'inite':
-    Inite();
-    break;
+    Inite(); break;
   case 'pagIniteSesion':
-    Login();
-    // btnAcceptLoginAndSendToHome();
-    break;
+    Login(); break;
   case 'pagRegister':
-    Register();
-    // btnAcceptRegisterAndSendToHome();
-    break;
+    Register(); break;
   case 'home':
-    Home();
-    // statusUserController();
-    break;
+    Home(); break;
+  case 'createPost':
+    Post(); break;
   default:
-    Inite();
-    break;
+    Inite(); break;
   }
 };
 

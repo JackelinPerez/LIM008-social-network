@@ -17,6 +17,6 @@ export default () => {
   const inputPassword = document.getElementById('inputPassword');
   const buttonAcceptLogin = document.getElementById('buttonAcceptLogin');
   btnAcceptLoginAndSendToHome(inputEmail, inputPassword, buttonAcceptLogin );
-  // selecccionando elementos del DOM
+
   return 1;
 };

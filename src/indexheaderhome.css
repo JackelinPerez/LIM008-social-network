@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed');
 
-.pag-register, .pag-inite {
-    display: none;
+* {
+    box-sizing: content-box;
 }
 
 body {
@@ -120,3 +120,19 @@ body {
  font-size: 18px;
  color: #000000;
  }
+
+ .grid-container {
+    display: grid;
+    grid-gap: 50px 100px;
+    grid-template-columns: auto auto auto;
+    background-color: rgb(158, 196, 226, 0.8);
+    padding: 10px;
+  }
+  
+  .grid-item {
+    background-color: rgba(110, 113, 117, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }

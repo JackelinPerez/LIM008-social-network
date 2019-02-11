@@ -1,10 +1,9 @@
-import {sendToPageOfRegister, accesWithFbOrGoogle, sendToPageOfInite} from '../view-controller.js';
+import {sendToPageOfRegister, accesWithFbOrGoogle} from '../view-controller.js';
 
 export default () => {
   const container = document.getElementById('container');
   const divContent = `
     <h2 class="logo-in-main">communitytech</h2>
-  <button class="btn-inite-sesion inite-text" id="buttonLogin">Iniciar session</button>
     <h3 class="slogan">entérate de lo último en tecnología</h3>
     <div class="ways-of-inite">
       <button id="buttonRegister" class="btn-register">Registrate</button>
@@ -15,9 +14,6 @@ export default () => {
     </div>
 ` ;
   container.innerHTML = divContent;
-  // Login
-  const buttonLogin = document.getElementById('buttonLogin');
-
   // Registrar a usuario
   const buttonRegister = document.getElementById('buttonRegister');
 
@@ -25,10 +21,8 @@ export default () => {
   const buttonFacebook = document.getElementById('buttonFacebook');
   const buttonGoogle = document.getElementById('buttonGoogle');
 
-
-  sendToPageOfInite(buttonLogin);
   sendToPageOfRegister(buttonRegister);
   accesWithFbOrGoogle(buttonFacebook, buttonGoogle);
-  
+
   return 1;
 };  

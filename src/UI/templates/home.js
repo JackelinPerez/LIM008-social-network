@@ -21,7 +21,7 @@ export default () => {
     </div>
     <button id="createPost">Crear Post</button>
 
-    <div class="container-of-posts>
+    <div id ="postWall" class="grid-container">
     </div>`;
   container.innerHTML = divContent;
 
@@ -31,8 +31,9 @@ export default () => {
   const buttonDeleteUser = document.getElementById('buttonDeleteUser');
   const buttonLogOut = document.getElementById('buttonLogOut');
   const createPost = document.getElementById('createPost');
+  const postWall = document.getElementById('postWall');
 
-  mainRedSocial(userPhoto, userName, buttonDeleteUser, buttonLogOut, createPost);
+  mainRedSocial(userPhoto, userName, buttonDeleteUser, buttonLogOut, createPost, postWall);
 
   return 1;
 };

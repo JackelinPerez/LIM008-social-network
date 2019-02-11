@@ -1,14 +1,17 @@
-// import { logInUser } from '../lib/auth/logInUser.js';
-
+import itemPost from './templates/itemPost.js';
 import { createUser, authenticateFacebook, authenticateGoogle, logInUser, logOutUser,
-  sendEmail, userStateChange, dataConnectUser} 
+  sendEmail, userStateChange, dataConnectUser, passwordReset} 
   from '../lib/authBD/authFireBase.js';
 
-import { createUserFireStore, readUserFireStore, updateUserFireStore, deleteUserFireStore}
+import { createBDFireStore, readBDFireStore, readDocBDFireStore,
+  updateBDFireStore, deleteUserFireStore, deleteDocFireStore, sendImagePost}
   from '../lib/crudBD/crudUser/crudUser.js';
 
-import {createPostFireStore, readPostFireStore, readDocPostFireStore, deletePostFireStore, updatePostFireStore} from '../lib/crudBD/crudPost/crudPost.js';
-import post from './templates/post.js';
+
+// import {createPostFireStore, readPostFireStore, readDocPostFireStore, deletePostFireStore, updatePostFireStore} from '../lib/crudBD/crudPost/crudPost.js';
+
+export let photoUserGlobal, nameUserGlobal;
+let contPost = 0;
 
 const changeHash = (hash) => {
   location.hash = hash;
@@ -90,17 +93,16 @@ export const mainRedSocial = (userPhoto, userName, buttonDeleteUser, buttonLogOu
     
     console.log('Usuario conectado es: ' + userConnect);
 
-    readUserFireStore('Users', userConnect)
+    readDocBDFireStore('Users', userConnect)
       .then((respDoc) => {
         const saveDocumentUser = respDoc.data();
         if (saveDocumentUser !== undefined) {
           userPhoto.src = saveDocumentUser.foto;
           userName.innerHTML = saveDocumentUser.usuario;
         }
-      })
-      .catch((err) => {
-        console.log(err.message);
       });
+
+    viewAllPost(postWall);
 
     buttonLogOut.addEventListener('click', () => {
       logOutUser()
@@ -119,7 +121,9 @@ export const mainRedSocial = (userPhoto, userName, buttonDeleteUser, buttonLogOu
     });
 
     createPost.addEventListener('click', () => {
-      changeHash('/createPost') ;
+      nameUserGlobal = userName.innerHTML;
+      photoUserGlobal = userPhoto.getAttribute('src');
+      changeHash('/createPost');
     });
   } else {
     console.log('Usuario No conectado');
@@ -130,7 +134,7 @@ export const mainRedSocial = (userPhoto, userName, buttonDeleteUser, buttonLogOu
 const detectPromisesCreateUser = (funct) => {
   funct
     .then((result) => {
-      readUserFireStore('Users', result.user.email)
+      readDocBDFireStore('Users', result.user.email)
         .then((respDoc) => {
           if (respDoc.data() === undefined) {
             console.log('No encontro documento');
@@ -141,17 +145,12 @@ const detectPromisesCreateUser = (funct) => {
             
             console.log(objDataUser);
             
-            Object.keys(objDataUser).forEach((ele) => {
-              createUserFireStore('Users', objDataUser.correo, ele, objDataUser[ele])
-                .then(() => console.log('documento se escribio correctamente'))
-                .catch(() => console.log(err.message));                
-            }); 
+            createBDFireStore('Users', objDataUser.correo, objDataUser)
+              .then(() => console.log('documento se escribio correctamente'))
+              .catch(() => console.log(err.message));                
           } else console.log('Usuario ya existe en la BD');
 
           changeHash('/home') ;
-        })
-        .catch((err) => {
-          console.log(err.message);
         });
     })
     .catch((err) => {
@@ -163,9 +162,48 @@ const detectPromisesCreateUser = (funct) => {
     });
 };
 
+const viewAllPost = (postWall) => {
+  let arrayItemPost = [];
+  readBDFireStore('Post')
+    .onSnapshot((doc) => {
+      contPost = '#' + (doc.size + 1).toString();
+      doc.forEach((post) => {
+        const dataPost = post.data();
+        arrayItemPost.push(itemPost(dataPost.id, dataPost.fotoUsuario, dataPost.nombreUsuario, dataPost.fecha,
+          dataPost.titulo, dataPost.contenido.multimedia, dataPost.contenido.descripcion));
+      });
 
+      postWall.innerHTML = arrayItemPost.join('');
+    });
+};
+
+export const itemViewPost = (idPost, likes, comment, share, editPost, deletePost) => {
+  // editPost.addEventListener('click', () => {
+  //     changeHash('/createPost');
+  // });
+
+  // deletePost.addEventListener('click', () => {
+  //   deleteDocFireStore('Post', idPost);
+  // });
+};
 
 // const pruebasPost () =>{
+
+// borrar todos los elementos de una coleccion
+
+// firebase.firestore().collection('Users').get()
+//   .then((doc) => {
+//     doc.forEach((data) => {
+//       console.log(data.id, ' => ', data.data());
+
+//       firebase.firestore().collection('Users').doc(data.id).delete()
+//         .catch((err) => {
+//           console.log(err.message);
+//         });
+//     });
+//   })
+//   .catch((err) => console.log(err.message));
+
 // // Ejemplo Eliminando Post
 // deletePostFireStore('Users', 'Post', 'jmpc2305@gmail.com', '#2');
 

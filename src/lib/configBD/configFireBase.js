@@ -9,4 +9,4 @@ export const configBD = () => {
   };
   firebase.initializeApp(config);
   return 1;
-}; 
+};

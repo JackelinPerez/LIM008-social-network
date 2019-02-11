@@ -3,6 +3,8 @@ import Login from './templates/pagLogin.js';
 import Register from './templates/pagRegister.js';
 import Home from './templates/home.js';
 import Post from './templates/post.js';
+import {paintHeader} from './templates/header.js';
+import {photoUserGlobal, nameUserGlobal} from './view-controller.js';
 
 const changeTmp = (hash) => {
   if (hash === '#/' || hash === '' || hash === '#') {
@@ -17,20 +19,29 @@ const changeTmp = (hash) => {
 const viewTmp = (routers) => {
   const router = routers.substr(2, routers.length - 2);
   const container = document.getElementById('container');
+  const headerContainer = document.getElementById('header-container');
+  headerContainer.innerHTML = '';
   container.innerHTML = '';
   switch (router) {
   case 'inite':
-    Inite(); break;
+    Inite(); 
+    paintHeader(router);break;
   case 'pagIniteSesion':
-    Login(); break;
+    Login();
+    paintHeader(router); break;
   case 'pagRegister':
-    Register(); break;
+    Register();
+    paintHeader(router); break;
   case 'home':
-    Home(); break;
+    Home();
+    paintHeader(router); break;
   case 'createPost':
-    Post(); break;
+    Post(nameUserGlobal, photoUserGlobal);
+    paintHeader(router); 
+    break;
   default:
-    Inite(); break;
+    Inite();
+    paintHeader(router); break;
   }
 };
 

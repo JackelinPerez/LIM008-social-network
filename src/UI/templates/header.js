@@ -1,44 +1,38 @@
-const paintHeader = (hash) => {
-  const header = document.createElement('header');
+import {sendToPageOfInite,sendToPageOfRegister} from '../view-controller.js';
+export const paintHeader = (hash) => {
+  const headerContainer = document.getElementById('header-container');
   const headerHTML = `
       <div class="header">
-      <h1 class="logo">
-        <span>
-          <a href="#/inite">communitytech</a>
-        </span>
-      </h1>
+      <h1 class="logo">communitytech<h1>
         ${hash === 'inite' ? `
         <div class="btn-inite-space">
         <button class="btn-inite-sesion inite-text" id="buttonLogin">
-          <span>
-            <a href="#/pagIniteSesion">Iniciar Sesión</a>
-          </span>
+          Iniciar Sesión
         </button>
       </div>` : null}
       ${hash === 'pagRegister' ? `
       <div class="btn-inite-space">
       <button class="btn-inite-sesion inite-text" id="buttonLogin">
-        <span>
-          <a href="#/pagIniteSesion">Iniciar Sesión</a>
-        </span>
-      </button>
-    </div>` : null}
+        Iniciar Sesión</button>
+    </div>` : null};
       ${hash === 'pagIniteSesion' ? `      
         <div class=" btn-register-in-inite">
           <button class="btn-register register-text" id="buttonRegister">
-            <span>
-              <a href="#/pagRegister">Registrar</a>
-            </span>
+            Registrar
           </button>
         </div> ` : null}
         ${hash === 'home' ? ` <div class="menu-in-inite">
         <nav class="menu-muro">
           <a href="#/misPosts">Mis Posts</a>
         </nav>
-      </div>` : null}
-  header.innerHTML = headerHTML;
-  return header;
+      </div>` : null} `;
+  headerContainer.innerHTML = headerHTML;
+  // Login
+  const buttonLogin = document.getElementById('buttonLogin');
+  const buttonRegister = document.getElementById('buttonRegister');
+  sendToPageOfRegister(buttonRegister);
+  sendToPageOfInite(buttonLogin);
+  return 1;
 };
   
-const headerContainer = document.getElementById('header-container');
-headerContainer.innerHTML = paintHeader();
+

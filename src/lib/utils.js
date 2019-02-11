@@ -55,3 +55,49 @@ export const objectCreatePost = (privacy, category, description, multimedia, pos
   };
   return objectPost;
 };
+
+export const createPost = (userPhoto, userName, postType, 
+  descriptionPost, multimedia, postPrivacy, savePublicPost, closePost) => {
+  let userConnect = dataConnectUser().email;
+  console.log('Usuario conectado es: ' + userConnect);
+  readUserFireStore('Users', userConnect)
+    .then((respDoc) => {
+      const saveDocumentUser = respDoc.data();
+      if (saveDocumentUser !== undefined) {
+        userPhoto.src = saveDocumentUser.photo;
+        userName.innerHTML = saveDocumentUser.user;
+      }
+
+      savePublicPost.addEventListener('click', () => {
+        const postPrivacyValue = postPrivacy.options[postPrivacy.selectedIndex].value;
+        const postTypeValue = postType.options[postType.selectedIndex].value;
+
+        console.log('postPrivacyValue: ' + postPrivacyValue + '; postTypeValue: ' + postTypeValue);
+        
+
+        let objDataUser = {};
+        // contador de post
+        let contPost = 0;
+
+        readPostFireStore('Users', 'Post', userConnect)
+          .then((result) => {
+            contPost = '#' + (result.size + 1).toString();
+            objDataUser = objectCreatePost(postPrivacyValue, postTypeValue, descriptionPost.value, '', getDayAndHour(), contPost);
+              
+            console.log(objDataUser);
+          
+            Object.keys(objDataUser).forEach((ele) => {
+              createPostFireStore('Users', 'Post', userConnect, contPost, ele, objDataUser[ele])
+                .then(() => console.log('documento se escribio correctamente en post'))
+                .catch(() => console.log(err.message));                
+            });
+          })
+          .catch((err) => {
+            console.log('ERRos: ' + err.message);
+          });
+      });
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};

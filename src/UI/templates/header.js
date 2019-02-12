@@ -2,7 +2,6 @@ import {sendToPageOfInite, sendToPageOfRegister} from '../view-controller.js';
 export const paintHeader = (hash) => {
   const headerContainer = document.getElementById('header-container');
   const headerHTML = `
-      <div class="header">
       <h1 class="logo">communitytech<h1>
         ${hash === 'inite' ? `
         <div class="btn-inite-space">
@@ -17,7 +16,7 @@ export const paintHeader = (hash) => {
     </div>` : '<div></div>'}
       ${hash === 'pagIniteSesion' ? `      
         <div class=" btn-register-in-inite">
-          <button class="btn-register register-text" id="buttonRegister">
+          <button class="btn-register-2 register-text" id="buttonRegister">
             Registrar
           </button>
         </div> ` : '<div></div>'}
@@ -29,9 +28,11 @@ export const paintHeader = (hash) => {
   headerContainer.innerHTML = headerHTML;
   // Login
   const buttonLogin = document.getElementById('buttonLogin');
-  const buttonRegister = document.getElementById('buttonRegister');
-  sendToPageOfRegister(buttonRegister);
   sendToPageOfInite(buttonLogin);
+  const buttonRegister = document.getElementById('buttonRegister');
+  
+  sendToPageOfRegister(buttonRegister);
+  
   return 1;
 };
   

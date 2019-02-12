@@ -3,7 +3,8 @@ import { btnAcceptRegisterAndSendToHome} from '../view-controller.js';
 export default () => {
   const container = document.getElementById('container');
   const divContent = `
-  <h2 class="text-center">únete a nuestra comunidad</h2>
+  <div class= "container-of-register">
+  <h2 class="text-of-page-register">únete a nuestra comunidad</h2>
   <form>
     <input type="text" id="createUsername" class="username" placeholder="nombre de usuario">
     <input type="text" id="createEmail"  class="correo" placeholder="correo">
@@ -12,6 +13,7 @@ export default () => {
   <button class="btn-register" id="buttonAcceptRegister">
   Registrar
   </button>
+  </div>
   `;
   container.innerHTML = divContent;
 

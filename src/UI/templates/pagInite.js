@@ -10,8 +10,8 @@ export default () => {
       <p>-o-</p>
       <button id="buttonFacebook" class="btn-continue-with-fb">Continuar con Facebook</button>
       <button id="buttonGoogle" class="btn-continue-with-google">Continuar con Google</button>
-      <h4 class="final-phrase"> ¡Descubre nuestra comunidad! </h4>
     </div>
+    <h4 class="final-phrase"> ¡Descubre nuestra comunidad! </h4>
 ` ;
   container.innerHTML = divContent;
   // Registrar a usuario

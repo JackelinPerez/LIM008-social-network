@@ -12,8 +12,14 @@ body {
 	   background-size: cover;
 }
 
+.header-container {
+    margin: 0;
+    padding: 0;
+} 
 .header {
     overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .logo {
@@ -25,46 +31,45 @@ body {
  }
  
  .btn-inite-sesion{
-    top:5px;
     float: right;
-    width: 94px;
+    width: 80px;
     height: 29px;
+    margin: 0;
+    padding: 0;
     background: #FFE662;
-    border-radius: 15px;
     font-family: Saira SemiCondensed;
-    font-size: 12px;
+    font-size: 14px;
     color: #000000;
  }
  .header-right {
     float: right;
     }
  
+    .container { 
+        margin: 10px;
+        padding: 10px;
+    }
+
  .logo-in-main {
  font-family: Reenie Beanie;
- margin-top: 50%;
- padding: 0;
- font-size: 70px;
+ top: 80px;
+ font-size: 15vw;
  text-align: center;
  color: #000000;
  }
  
  .slogan {
     font-family: Righteous;
+    padding: 0;
     font-size: 18px;
     text-align: center;
     color: #333333;
  }
  
- .ways-of-inite {
+ .ways-of-inite, .final-phrase {
      text-align: center;
- }
-
- .btn-register-in-inite {
-     display: none;
- }
-
- .menu-muro {
-     display: none;
+     padding: 0;
+     margin: 0;
  }
 
  .btn-register {
@@ -73,13 +78,7 @@ body {
  background: #71C04C;
  border-radius: 5px;
  }
- 
- .register-text {
- font-family: Saira SemiCondensed;
- font-size: 12px;
- text-decoration: none;
- color: #FFF9F9;
- }
+
  
  p {
  width: 27px;
@@ -111,13 +110,16 @@ body {
  color: #000000;
  }
  
+ .btn-register-2{
+    width: 144px;
+    height: 30px;
+    background: #71C04C;
+float: right;
+ }
  .final-phrase {
- width: 179px;
- height: 18px;
- margin-left: 25%;
  font-family: Reenie Beanie;
  font-weight: 500;
- font-size: 18px;
+ font-size: 5vw;
  color: #000000;
  }
 

@@ -1,0 +1,52 @@
+$color-primary:rgba(83, 151, 241, 0.644);
+input {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.block {
+  display: block;
+}
+
+.m-a {
+  margin: auto;
+}
+.m-10 {
+  margin: 10px;
+}
+
+.mt-5 {
+  margin-top: 5px;
+}
+
+.mt-8 {
+  margin-top: 8px;
+}
+
+.mt-15 {
+  margin-top: 15px;
+}
+
+.mt-100 {
+  margin-top: 100px;
+}
+
+.p-5 {
+  padding: 15px;
+}
+
+.p-15 {
+  padding: 15px;
+}
+
+.p-30 {
+  padding: 30px;
+}
+
+.b-r {
+  border-radius: 20px;
+}
+

@@ -1,0 +1,169 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import url("https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed");
+.transition{
+  
+}
+body {
+    background: url(../../fondo.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+	   -moz-background-size: cover;
+	   -o-background-size: cover;
+	   background-size:  auto cover;
+}
+a {
+  text-decoration: none;
+}
+.table {
+  display: table;
+  .cell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+header {
+  padding: 0px 10px;
+  background: rgba(83, 151, 241, 0.644);
+  .header-nav {
+    width: 100%;
+    height: 80px;
+
+    .brand-logo {
+      font-size: 3em;
+      font-family: Reenie Beanie;
+      color: black;
+      font-weight: bold;
+    }
+    .right,
+    .right2 {
+      ul {
+        float: right;
+        li {
+          padding: 0px 5px;
+        }
+      }
+    }
+  }
+
+  .avatar-perfil {
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+  }
+
+  .ul-movil {
+    display: none;
+  }
+}
+
+.btn-inite-sesion {
+  padding: 8px 15px;
+  background: #ffe662;
+  border-radius: 15px;
+  font-family: Saira SemiCondensed;
+  color: #000000;
+  font-size: 1em;
+  transition: background 0.3s;
+  &:hover {
+    background: darken(#ffe662, 20%);
+  }
+  &:active {
+    background: darken(#ffe662, 40%);
+  }
+}
+.logo-in-main {
+  font-family: Reenie Beanie;
+  margin-top: 20%;
+  font-size: 8em;
+  text-align: center;
+  color: #000000;
+}
+.slogan {
+  font-family: Righteous;
+  font-size: 18px;
+  text-align: center;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+p {
+  height: 19px;
+  text-align: center;
+  font-family: Nova Round;
+  font-size: 15px;
+  color: #000000;
+  margin: 15px auto;
+}
+
+.btn-register {
+  padding: 6px 10px;
+  background: #71c04c;
+  border-radius: 5px;
+  &:hover {
+    background: darken(#71c04c, 10%);
+  }
+}
+
+.btn-continue-with-fb {
+  padding: 6px 10px;
+  background: #5783f1;
+  border-radius: 5px;
+  font-family: Saira SemiCondensed;
+  font-size: 12px;
+  &:hover {
+    background: darken(#5783f1, 10%);
+  }
+}
+.btn-continue-with-google {
+  padding: 6px 10px;
+  background: #ffffff;
+  border-radius: 5px;
+  font-family: Saira SemiCondensed;
+  font-size: 12px;
+  color: #000000;
+  &:hover {
+    background: darken(#ffffff, 10%);
+  }
+}
+
+.final-phrase {
+  margin: 15px auto;
+  font-family: Reenie Beanie;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #000000;
+}
+@media screen and (max-width: 600px) {
+  .btn-inite-sesion {
+    padding: 6px 11px;
+    font-size: 0.8em;
+  }
+
+  header {
+    padding: 0px 5px;
+    .header-nav {
+      height: 50px;
+      .brand-logo {
+        font-size: 1.5em;
+      }
+      .right {
+        display: none;
+      }
+    }
+    nav {
+      display: none;
+    }
+
+    ul {
+      display: block;
+    }
+  }
+  .logo-in-main {
+    font-size: 4em;
+  }
+}

@@ -1,0 +1,263 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+@import url("https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed");
+/* line 5, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 8, ../sass/index.scss */
+body {
+  background: url(../../fondo.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: auto cover;
+}
+
+/* line 15, ../sass/index.scss */
+a {
+  text-decoration: none;
+}
+
+/* line 18, ../sass/index.scss */
+.table {
+  display: table;
+}
+/* line 20, ../sass/index.scss */
+.table .cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/* line 26, ../sass/index.scss */
+header {
+  padding: 0px 10px;
+  background: rgba(83, 151, 241, 0.644);
+}
+/* line 29, ../sass/index.scss */
+header .header-nav {
+  width: 100%;
+  height: 80px;
+}
+/* line 33, ../sass/index.scss */
+header .header-nav .brand-logo {
+  font-size: 3em;
+  font-family: Reenie Beanie;
+  color: black;
+  font-weight: bold;
+}
+/* line 41, ../sass/index.scss */
+header .header-nav .right ul,
+header .header-nav .right2 ul {
+  float: right;
+}
+/* line 43, ../sass/index.scss */
+header .header-nav .right ul li,
+header .header-nav .right2 ul li {
+  padding: 0px 5px;
+}
+/* line 50, ../sass/index.scss */
+header .avatar-perfil {
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+}
+/* line 56, ../sass/index.scss */
+header .ul-movil {
+  display: none;
+}
+
+/* line 61, ../sass/index.scss */
+.btn-inite-sesion {
+  padding: 8px 15px;
+  background: #ffe662;
+  border-radius: 15px;
+  font-family: Saira SemiCondensed;
+  color: #000000;
+  font-size: 1em;
+  transition: background 0.3s;
+}
+/* line 69, ../sass/index.scss */
+.btn-inite-sesion:hover {
+  background: #fbd300;
+}
+/* line 72, ../sass/index.scss */
+.btn-inite-sesion:active {
+  background: #957d00;
+}
+
+/* line 76, ../sass/index.scss */
+.logo-in-main {
+  font-family: Reenie Beanie;
+  margin-top: 20%;
+  font-size: 8em;
+  text-align: center;
+  color: #000000;
+}
+
+/* line 83, ../sass/index.scss */
+.slogan {
+  font-family: Righteous;
+  font-size: 18px;
+  text-align: center;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+/* line 91, ../sass/index.scss */
+p {
+  height: 19px;
+  text-align: center;
+  font-family: Nova Round;
+  font-size: 15px;
+  color: #000000;
+  margin: 15px auto;
+}
+
+/* line 100, ../sass/index.scss */
+.btn-register {
+  padding: 6px 10px;
+  background: #71c04c;
+  border-radius: 5px;
+}
+/* line 104, ../sass/index.scss */
+.btn-register:hover {
+  background: #5aa138;
+}
+
+/* line 109, ../sass/index.scss */
+.btn-continue-with-fb {
+  padding: 6px 10px;
+  background: #5783f1;
+  border-radius: 5px;
+  font-family: Saira SemiCondensed;
+  font-size: 12px;
+}
+/* line 115, ../sass/index.scss */
+.btn-continue-with-fb:hover {
+  background: #2860ed;
+}
+
+/* line 119, ../sass/index.scss */
+.btn-continue-with-google {
+  padding: 6px 10px;
+  background: #ffffff;
+  border-radius: 5px;
+  font-family: Saira SemiCondensed;
+  font-size: 12px;
+  color: #000000;
+}
+/* line 126, ../sass/index.scss */
+.btn-continue-with-google:hover {
+  background: #e6e6e6;
+}
+
+/* line 131, ../sass/index.scss */
+.final-phrase {
+  margin: 15px auto;
+  font-family: Reenie Beanie;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #000000;
+}
+
+@media screen and (max-width: 600px) {
+  /* line 139, ../sass/index.scss */
+  .btn-inite-sesion {
+    padding: 6px 11px;
+    font-size: 0.8em;
+  }
+
+  /* line 144, ../sass/index.scss */
+  header {
+    padding: 0px 5px;
+  }
+  /* line 146, ../sass/index.scss */
+  header .header-nav {
+    height: 50px;
+  }
+  /* line 148, ../sass/index.scss */
+  header .header-nav .brand-logo {
+    font-size: 1.5em;
+  }
+  /* line 151, ../sass/index.scss */
+  header .header-nav .right {
+    display: none;
+  }
+  /* line 155, ../sass/index.scss */
+  header nav {
+    display: none;
+  }
+  /* line 159, ../sass/index.scss */
+  header ul {
+    display: block;
+  }
+
+  /* line 163, ../sass/index.scss */
+  .logo-in-main {
+    font-size: 4em;
+  }
+}

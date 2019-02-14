@@ -1,12 +1,28 @@
-import {registerOnSubmit, accesWithFbOrGoogle, loginUser} from '../view-controller.js';
+import { registerOnSubmit, accesWithFbOrGoogle, loginUser } from '../view-controller.js';
 
 export default () => {
   const container = document.getElementById('container');
   const divContent = `
+  <header>
+      <nav class="table header-nav">
+        <div class="cell">
+        <a href="#!" class="brand-logo">
+            ComunityTech
+          </a>
+        </div>
+        <div class="cell right2">
+          <ul class="table">
+            <li class="cell">
+              <a href="#" id="buttonLogin" class="btn-inite-sesion">
+                Iniciar Session
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+  
     <h2 class="logo-in-main">communitytech</h2>
-    <div class="header-right">
-      <button class="btn-inite-sesion inite-text" id="buttonLogin">Iniciar session</button>
-    </div>
     <h3 class="slogan">entérate de lo último en tecnología</h3>
     <div class="ways-of-inite">
       <button id="buttonRegister" class="btn-register">Registrate</button>
@@ -15,6 +31,8 @@ export default () => {
       <button id="buttonGoogle" class="btn-continue-with-google">Continuar con Google</button>
       <h4 class="final-phrase"> ¡Descubre nuestra comunidad! </h4>
     </div>
+  
+
 ` ;
   container.innerHTML = divContent;
   // Login

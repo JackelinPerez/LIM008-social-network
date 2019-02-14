@@ -81,10 +81,11 @@ export const createPost = (userPhoto, userName, postType, titlePost,
       createPostBDFireStore('Post', objDataUser)
       .then(() => {
         console.log('documento se escribio correctamente en post');        
-        changeHash('/home') ;
+       
       })
       .catch(() => console.log(err.message));
     }  
+    changeHash('/home') ;
   });
 
   closePost.addEventListener('click', () => {

@@ -1,16 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed');
+
 
 .pag-register, .pag-inite {
     display: none;
 }
 
-body {
-    background: url(fondo.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-	   -moz-background-size: cover;
-	   -o-background-size: cover;
-	   background-size: cover;
-}
 
 .header {
     overflow: hidden;
@@ -24,36 +17,10 @@ body {
  color: #333333;
  }
  
- .btn-inite-sesion{
-    top:5px;
-    float: right;
-    width: 94px;
-    height: 29px;
-    background: #FFE662;
-    border-radius: 15px;
-    font-family: Saira SemiCondensed;
-    font-size: 12px;
-    color: #000000;
- }
+ 
  .header-right {
     float: right;
     }
- 
- .logo-in-main {
- font-family: Reenie Beanie;
- margin-top: 50%;
- padding: 0;
- font-size: 70px;
- text-align: center;
- color: #000000;
- }
- 
- .slogan {
-    font-family: Righteous;
-    font-size: 18px;
-    text-align: center;
-    color: #333333;
- }
  
  .ways-of-inite {
      text-align: center;
@@ -81,46 +48,6 @@ body {
  color: #FFF9F9;
  }
  
- p {
- width: 27px;
- height: 19px;
- margin-left: 48%;
- text-align: center;
- font-family: Nova Round;
- font-size: 15px;
- color: #000000;
- }
- 
- .btn-continue-with-fb {
- width: 144px;
- height: 30px;
- background: #2D4B9A;
- border-radius: 5px;
- font-family: Saira SemiCondensed;
- font-size: 12px;
- color: #FCF6F6;
- }
- 
- .btn-continue-with-google {
- width: 144px;
- height: 30px;
- background: #FFFFFF;
- border-radius: 5px;
-    font-family: Saira SemiCondensed;
- font-size: 12px;
- color: #000000;
- }
- 
- .final-phrase {
- width: 179px;
- height: 18px;
- margin-left: 25%;
- font-family: Reenie Beanie;
- font-weight: 500;
- font-size: 18px;
- color: #000000;
- }
-
  .grid-container {
     display: grid;
     grid-gap: 50px 100px;

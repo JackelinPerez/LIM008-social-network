@@ -1,60 +1,523 @@
-/*
-Error: File to import not found or unreadable: pagIniteSesion.
-       Load paths:
-         Compass::SpriteImporter
-         C:/red-social/LIM008-social-network/src/css/sass
-         C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets
-        on line 12 of C:/red-social/LIM008-social-network/src/css/sass/index.scss
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+@import url("https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed");
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+@import url("https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed");
+/* line 5, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
 
-7: @import url("https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed");
-8: 
-9: 
-10: @import 'universal';
-11: @import 'pagInite';
-12: @import 'pagIniteSesion';
+/* line 22, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
 
-Backtrace:
-C:/red-social/LIM008-social-network/src/css/sass/index.scss:12
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/import_node.rb:67:in `rescue in import'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/import_node.rb:44:in `import'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/import_node.rb:28:in `imported_file'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/import_node.rb:37:in `css_import?'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:314:in `visit_import'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `block in with_base'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:115:in `with_frame'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `with_base'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `visit'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:52:in `map'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:171:in `block in visit_children'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:170:in `visit_children'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:190:in `visit_root'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:161:in `visit'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:10:in `visit'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/root_node.rb:36:in `css_tree'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/tree/root_node.rb:20:in `render'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/engine.rb:284:in `render'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:17:in `block in render'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:29:in `with_import_scope'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:16:in `render'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/plugin/compiler.rb:494:in `update_stylesheet'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/plugin/compiler.rb:209:in `each'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/plugin/compiler.rb:473:in `on_file_changed'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/lib/sass/plugin/compiler.rb:331:in `block in watch'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/vendor/listen/lib/listen/listener.rb:252:in `on_change'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/vendor/listen/lib/listen/adapters/polling.rb:48:in `poll_changed_directories'
-C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/sass-3.4.25/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: File to import not found or unreadable: pagIniteSesion.\A        Load paths:\A          Compass::SpriteImporter\A          C:/red-social/LIM008-social-network/src/css/sass\A          C:/Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets\A         on line 12 of C:/red-social/LIM008-social-network/src/css/sass/index.scss\A \A 7: @import url(\"https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed\");\A 8: \A 9: \A 10: @import 'universal';\A 11: @import 'pagInite';\A 12: @import 'pagIniteSesion';"; }
+/* line 24, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../Ruby26-x64/lib/ruby/gems/2.6.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 1, ../sass/_universal.scss */
+input,
+textarea,
+select {
+  display: block;
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 13, ../sass/_universal.scss */
+.block {
+  display: block;
+}
+
+/* line 17, ../sass/_universal.scss */
+.m-a {
+  margin: auto;
+}
+
+/* line 20, ../sass/_universal.scss */
+.m-10 {
+  margin: 10px;
+}
+
+/* line 24, ../sass/_universal.scss */
+.mt-5 {
+  margin-top: 5px;
+}
+
+/* line 28, ../sass/_universal.scss */
+.mt-8 {
+  margin-top: 8px;
+}
+
+/* line 32, ../sass/_universal.scss */
+.mt-15 {
+  margin-top: 15px;
+}
+
+/* line 36, ../sass/_universal.scss */
+.mt-100 {
+  margin-top: 100px;
+}
+
+/* line 39, ../sass/_universal.scss */
+.mr-5 {
+  margin-right: 5px;
+}
+
+/* line 43, ../sass/_universal.scss */
+.p-5 {
+  padding: 15px;
+}
+
+/* line 47, ../sass/_universal.scss */
+.p-15 {
+  padding: 15px;
+}
+
+/* line 51, ../sass/_universal.scss */
+.p-30 {
+  padding: 30px;
+}
+
+/* line 55, ../sass/_universal.scss */
+.b-r {
+  border-radius: 20px;
+}
+
+/* line 59, ../sass/_universal.scss */
+.cont-float {
+  height: auto;
+  overflow: auto;
+}
+
+/* line 63, ../sass/_universal.scss */
+.w-60p {
+  float: left;
+  width: 60%;
+}
+
+/* line 68, ../sass/_universal.scss */
+.w-40p {
+  float: left;
+  width: 40%;
+}
+
+/* line 73, ../sass/_universal.scss */
+.left {
+  float: left;
+}
+
+/* line 76, ../sass/_universal.scss */
+.right {
+  float: right;
+}
+
+/* line 80, ../sass/_universal.scss */
+.cursor {
+  cursor: pointer;
+}
+
+/* line 84, ../sass/_universal.scss */
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+/* line 87, ../sass/_universal.scss */
+ul {
+  font-family: "Poppins", sans-serif !important;
+}
+
+/* line 1, ../sass/_botones.scss */
+.btn {
+  padding: 8px 15px;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+  color: #000000;
+  font-size: 1em;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+/* line 11, ../sass/_botones.scss */
+.btn1 {
+  background: #ec49b187;
+}
+/* line 13, ../sass/_botones.scss */
+.btn1:hover {
+  background: #ec49b187, 10%;
+}
+/* line 16, ../sass/_botones.scss */
+.btn1:active {
+  background: #ec49b187, 30%;
+}
+
+/* line 21, ../sass/_botones.scss */
+.btn2 {
+  background: #cecece;
+}
+/* line 23, ../sass/_botones.scss */
+.btn2:hover {
+  background: #cecece, 10%;
+}
+/* line 26, ../sass/_botones.scss */
+.btn2:active {
+  background: #cecece, 30%;
+}
+
+/* line 30, ../sass/_botones.scss */
+.btn3 {
+  background: #ffe662;
+}
+/* line 32, ../sass/_botones.scss */
+.btn3:hover {
+  background: #fbd300;
+}
+/* line 35, ../sass/_botones.scss */
+.btn3:active {
+  background: #957d00;
+}
+
+/* line 40, ../sass/_botones.scss */
+.btn-inite-sesion {
+  padding: 8px 15px;
+  background: #ffe662;
+  border-radius: 15px;
+  font-family: "Poppins", sans-serif;
+  color: #000000;
+  font-size: 1em;
+  transition: background 0.3s;
+}
+/* line 48, ../sass/_botones.scss */
+.btn-inite-sesion:hover {
+  background: #fbd300;
+}
+/* line 51, ../sass/_botones.scss */
+.btn-inite-sesion:active {
+  background: #957d00;
+}
+
+/* line 56, ../sass/_botones.scss */
+.btn-register {
+  padding: 6px 10px;
+  background: #71c04c;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+}
+/* line 61, ../sass/_botones.scss */
+.btn-register:hover {
+  background: #5aa138;
+}
+
+/* line 66, ../sass/_botones.scss */
+.btn-continue-with-fb {
+  padding: 6px 10px;
+  background: #5783f1;
+  border-radius: 5px;
+  font-family: Ubuntu;
+  font-size: 12px;
+  color: #f5f3f3;
+  font-family: "Poppins", sans-serif;
+}
+/* line 74, ../sass/_botones.scss */
+.btn-continue-with-fb:hover {
+  background: #2860ed;
+}
+
+/* line 78, ../sass/_botones.scss */
+.btn-continue-with-google {
+  margin-left: 20px;
+  padding: 6px 10px;
+  background: #ffffff;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  color: #000000;
+}
+/* line 86, ../sass/_botones.scss */
+.btn-continue-with-google:hover {
+  background: #e6e6e6;
+}
+
+@media screen and (max-width: 600px) {
+  /* line 92, ../sass/_botones.scss */
+  .btn-inite-sesion {
+    padding: 6px 11px;
+    font-size: 0.8em;
+  }
+
+  /* line 97, ../sass/_botones.scss */
+  .btn-continue-with-google {
+    display: block;
+    margin: 10px auto;
+  }
+
+  /* line 102, ../sass/_botones.scss */
+  .btn-continue-with-fb {
+    margin-left: 0px;
+    display: block;
+    margin: 10px auto;
+  }
+}
+/* line 2, ../sass/_header.scss */
+.sub-menu .avatar-perfil {
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  background: #b3b3b3;
+}
+/* line 9, ../sass/_header.scss */
+.sub-menu ul {
+  display: none;
+  position: absolute;
+  right: 20px;
+  background: gray;
+}
+/* line 14, ../sass/_header.scss */
+.sub-menu ul li {
+  display: block;
+  padding: 15px 10px !important;
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+/* line 22, ../sass/_header.scss */
+.sub-menu:hover ul {
+  display: block;
+}
+/* line 26, ../sass/_header.scss */
+.sub-menu:active {
+  display: block;
+}
+
+/* line 1, ../sass/_pagInite.scss */
+.ways-of-inite {
+  text-align: center;
+}
+
+/* line 4, ../sass/_pagInite.scss */
+.icon-btn {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* line 8, ../sass/_pagInite.scss */
+body {
+  background: url(../../image/fondo.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: auto cover;
+}
+
+/* line 15, ../sass/_pagInite.scss */
+a {
+  text-decoration: none;
+}
+
+/* line 18, ../sass/_pagInite.scss */
+.table {
+  display: table;
+}
+/* line 20, ../sass/_pagInite.scss */
+.table .cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/* line 26, ../sass/_pagInite.scss */
+header {
+  padding: 0px 10px;
+  background: rgba(83, 151, 241, 0.644);
+}
+/* line 29, ../sass/_pagInite.scss */
+header .header-nav {
+  width: 100%;
+  height: 80px;
+}
+/* line 33, ../sass/_pagInite.scss */
+header .header-nav .brand-logo {
+  font-size: 3em;
+  font-family: Reenie Beanie;
+  color: black;
+  font-weight: bold;
+}
+/* line 41, ../sass/_pagInite.scss */
+header .header-nav .right ul,
+header .header-nav .right2 ul {
+  float: right;
+}
+/* line 43, ../sass/_pagInite.scss */
+header .header-nav .right ul li,
+header .header-nav .right2 ul li {
+  padding: 0px 5px;
+}
+/* line 50, ../sass/_pagInite.scss */
+header .ul-movil {
+  display: none;
+}
+
+/* line 55, ../sass/_pagInite.scss */
+.logo-in-main {
+  font-family: Reenie Beanie;
+  margin-top: 10%;
+  font-size: 8em;
+  text-align: center;
+  color: #000000;
+}
+
+/* line 62, ../sass/_pagInite.scss */
+.slogan {
+  font-family: Righteous;
+  font-size: 18px;
+  text-align: center;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+/* line 70, ../sass/_pagInite.scss */
+p {
+  height: 19px;
+  text-align: center;
+  font-family: Nova Round;
+  font-size: 15px;
+  color: #000000;
+  margin: 15px auto;
+}
+
+/* line 79, ../sass/_pagInite.scss */
+.final-phrase {
+  margin: 30px auto;
+  font-family: Reenie Beanie;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #000000;
+}
+
+@media screen and (max-width: 600px) {
+  /* line 87, ../sass/_pagInite.scss */
+  header {
+    padding: 0px 5px;
+  }
+  /* line 89, ../sass/_pagInite.scss */
+  header .header-nav {
+    height: 50px;
+  }
+  /* line 91, ../sass/_pagInite.scss */
+  header .header-nav .brand-logo {
+    font-size: 1.5em;
+  }
+  /* line 94, ../sass/_pagInite.scss */
+  header .header-nav .right {
+    display: none;
+  }
+  /* line 98, ../sass/_pagInite.scss */
+  header nav {
+    display: none;
+  }
+  /* line 102, ../sass/_pagInite.scss */
+  header ul {
+    display: block;
+  }
+
+  /* line 106, ../sass/_pagInite.scss */
+  .logo-in-main {
+    font-size: 4em;
+  }
+}
+/* line 1, ../sass/_register&initS.scss */
+.cont-register-login {
+  background: rgba(83, 151, 241, 0.644);
+  width: 70%;
+  max-width: 450px;
+}
+/* line 5, ../sass/_register&initS.scss */
+.cont-register-login h2 {
+  font-size: 3em;
+  text-align: center;
+  font-family: Reenie Beanie;
+  font-weight: bold;
+}
+/* line 12, ../sass/_register&initS.scss */
+.cont-register-login form label,
+.cont-register-login form input {
+  display: block;
+}
+/* line 16, ../sass/_register&initS.scss */
+.cont-register-login form input {
+  width: 100%;
+  font-size: 1em;
+}
+
+/* line 1, ../sass/_crearPost.scss */
+.cont-r-post {
+  background: rgba(241, 214, 83, 0.72);
+  width: 70%;
+  max-width: 450px;
+}
+/* line 5, ../sass/_crearPost.scss */
+.cont-r-post .texta {
+  height: 180px;
+}
+/* line 8, ../sass/_crearPost.scss */
+.cont-r-post img {
+  width: 100%;
+  height: 180px;
+}

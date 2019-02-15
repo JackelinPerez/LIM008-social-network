@@ -1,6 +1,9 @@
 import { registerOnSubmit, accesWithFbOrGoogle, loginUser } from '../view-controller.js';
 
 export default () => {
+
+  document.getElementById("header-container").innerHTML = ``;
+
   const container = document.getElementById('container');
   const divContent = `
   <header>
@@ -23,7 +26,6 @@ export default () => {
           </div>
         </nav>
   </header>
-
 
   <h2 class="logo-in-main">communitytech</h2>
   <h3 class="slogan">entérate de lo último en tecnología</h3>

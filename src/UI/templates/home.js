@@ -1,12 +1,49 @@
-import { mainRedSocial} from '../view-controller.js';
+import { mainRedSocial } from '../view-controller.js';
 
 export default () => {
+  const header_container = document.getElementById("header-container");
+  const divHeader = `
+    <nav class="table header-nav">
+      <div class="cell">
+        <nav class="table header-nav">
+          <div class="cell">
+            <a href="#!" class="brand-logo">
+              ComunityTech
+            </a>
+          </div>
+          <div class="cell right2">
+            <ul class="table">
+              <li class="cell">
+                <label id="userName"></label>
+              </li>
+              <li class="cell sub-menu">
+                <img src="" id="userPhoto" class="avatar-perfil cursor">
+                <!-- <input type="image" src=""  ></input> -->
+
+                <ul class="rrr ">
+                  <li id="createPost" class="btn3 cursor"> Crear Post </li>
+                  <li id="buttonDeleteUser" class="btn3 cursor">
+                    <a>
+                      Eliminar cuenta
+                    </a>
+                  </li>
+                  <li id="buttonLogOut" class="btn3 cursor">
+                    <a>
+                      Salir
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </nav>
+`;
+  header_container.innerHTML = divHeader;
+
   const container = document.getElementById('container');
   const divContent = `
-    <button class="btn-inite-sesion inite-text" id="buttonDeleteUser">Eliminar cuenta</button> 
-    <button class="btn-inite-sesion inite-text" id="buttonLogOut">Salir</button> 
-    <input type="image" src="" id= "userPhoto" width="80" height="100" alt="Login"></input><br>
-    <label id= "userName"></label>
     <select id = "filterTypePost" class="buttonsOfCategories">
         <option value="Todos">Elige tu filtro</option>
         <option value="Inteligencia Artificial">Inteligencia Artificial</option>
@@ -16,11 +53,7 @@ export default () => {
         <option value="Dispositivos móviles">Dispositivos móviles</option>
         <option value="Curiosidades">Curiosidades</option>
     </select>    
-    <div class="section-of-new-post">
-        <h6 class="text-create-new-post"> Crear nuevo post </h6>
-        <input type="text" class="campo-de-texto" placeholder="¿Que hay de nuevo?"></input>
-    </div>
-    <button id="createPost">Crear Post</button>
+
 
     <div id ="postWall" class="grid-container">
     </div>`;

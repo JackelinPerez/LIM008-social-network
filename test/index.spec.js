@@ -14,10 +14,9 @@ global.firebase = firebasemock.MockFirebaseSdk(
 );
 
 // iniciando test
+import { createUser, logInUser, authenticateFacebook, authenticateGoogle, passwordReset, logOutUser } from "../src/lib/authBD/authFireBase.js"
 
-import { createUser, logInUser, authenticateFacebook, authenticateGoogle, passwordReset,logOutUser } from "../src/lib/authBD/authFireBase.js"
-
-describe('createUser', () =>{
+describe('createUser', () => {
   it('Deberia ser una funcion', () => {
     expect(typeof (createUser)).toBe('function');
   });
@@ -56,7 +55,7 @@ describe('authenticateGoogle', () => {
   it('Deberia ser una funcion', () => {
     expect(typeof (authenticateGoogle)).toBe('function');
   });
-  it('Deberia poder inisiar sesion con Google', () => {
+  it('Deberia poder iniciar sesion con Google', () => {
     return authenticateGoogle().then((result) => {
       expect(typeof result).toBe('object')
     });
@@ -71,3 +70,49 @@ describe('logOutUser', () => {
     return logOutUser();
   });
 });
+
+
+
+// describe('createPostBDFirestore', () => {
+//   it('debería crear un post', () => {
+//     expect(createPostBDFirestore());
+
+//     triggers.create(event);
+//   });
+
+//   it('update', function() {
+//     var event = {
+//       data: new firebasemock.DeltaDocumentSnapshot(mockapp, {
+//         name: 'bob',
+//         createdTime: new Date()
+//       }, {
+//         name: 'bobby'
+//       }, 'users/' + uid),
+//       params: {
+//         uid: uid
+//       }
+//     };
+
+//     expect(event.data.previous.get('name')).to.equal('bob');
+//     expect(event.data.get('name')).to.equal('bobby');
+//     expect(event.params.uid).to.equal(uid);
+
+//     triggers.update(event);
+//   });
+
+//   it('delete', function() {
+//     var event = {
+//       data: new firebasemock.DeltaDocumentSnapshot(mockapp, {
+//         name: 'bob',
+//         createdTime: new Date()
+//       }, null, 'users/' + uid),
+//       params: {
+//         uid: uid
+//       }
+//     };
+
+//     expect(event.data.previous.get('name')).to.equal('bob');
+//     expect(event.params.uid).to.equal(uid);
+
+//   });
+// });

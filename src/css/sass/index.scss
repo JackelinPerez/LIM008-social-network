@@ -5,8 +5,13 @@
 
 @import "compass/reset";
 @import url("https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed");
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+@import url('https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed');
 
-
+@import 'color';
 @import 'universal';
+@import 'botones';
+@import 'header';
 @import 'pagInite';
-@import 'pagIniteSesion';
+@import 'register&initS';
+@import 'crearPost';

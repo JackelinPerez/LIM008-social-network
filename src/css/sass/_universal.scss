@@ -1,5 +1,8 @@
-$color-primary:rgba(83, 151, 241, 0.644);
-input {
+input,
+textarea,
+select {
+  display: block;
+  width: 100%;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -33,6 +36,9 @@ input {
 .mt-100 {
   margin-top: 100px;
 }
+.mr-5 {
+  margin-right: 5px;
+}
 
 .p-5 {
   padding: 15px;
@@ -50,3 +56,35 @@ input {
   border-radius: 20px;
 }
 
+.cont-float {
+  height: auto;
+  overflow: auto;
+}
+.w-60p {
+  float: left;
+  width: 60%;
+}
+
+.w-40p {
+  float: left;
+  width: 40%;
+}
+
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+ul{
+  
+  font-family: "Poppins", sans-serif !important;
+}

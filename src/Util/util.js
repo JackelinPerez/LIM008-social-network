@@ -73,7 +73,14 @@ export const ObjectUpdatePost = (privacidad, categoria, titulo, descripcion, mul
 
 export const deletAndEdit = (idDeleteEdit) => {
   const deleteEdit = 
-  `<button id="editPost_${idDeleteEdit}">Editar</button>
-  <button id="deletePost_${idDeleteEdit}">Eliminar</button>`;
+  `<span id="editPost_${idDeleteEdit}" class="icon-pencil cursor mr-5"></span>
+  <span id="deletePost_${idDeleteEdit}" class="icon-bin cursor"></span>`;
   return deleteEdit;
 };
+
+export const messageAuth_1 = 'The email address is already in use by another account.';
+export const messageAuth_2 = 'The email address is badly formatted.';
+export const messageAuth_3 = 'Password should be at least 6 characters';
+export const messageAuth_4 = 'There is no user record corresponding to this identifier. The user may have been deleted.'; 
+export const messageAuth_5 = 'The password is invalid or the user does not have a password.';
+

@@ -69,9 +69,11 @@ Es el prototipo hecho en lápiz y papel, las dos ideas de pantalla de inicio y l
 
 # PROTOTIPO
 
-(https://ibb.co/wKwy5jT)
-(https://ibb.co/cYk49J4)
-(https://ibb.co/dgygRg5)
+![Página inicar sesión y muro](https://ibb.co/wKwy5jT)
+
+![Página de inicio y registro](https://ibb.co/cYk49J4)
+
+![Página de logueo](https://ibb.co/dgygRg5)
 
 _Prototipo de alta fidelidad_
 Son los prototipos hecho en Figma, exportados a Zeplin:

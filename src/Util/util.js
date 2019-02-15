@@ -73,7 +73,7 @@ export const ObjectUpdatePost = (privacidad, categoria, titulo, descripcion, mul
 
 export const deletAndEdit = (idDeleteEdit) => {
   const deleteEdit = 
-  `<button id="editPost_${idDeleteEdit}">Editar</button>
-  <button id="deletePost_${idDeleteEdit}">Eliminar</button>`;
+  `<span id="editPost_${idDeleteEdit}" class="icon-pencil cursor mr-5"></span>
+  <span id="deletePost_${idDeleteEdit}" class="icon-bin cursor"></span>`;
   return deleteEdit;
 };

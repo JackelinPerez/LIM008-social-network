@@ -1,30 +1,48 @@
-import {createPost, editPost} from '../view-controller.js';
+import { createPost, editPost } from '../view-controller.js';
 
 export default (editCreate) => {
   const container = document.getElementById('container');
   const divContent = `
-    <input type="image" id= "userPhoto" width="80" height="100" alt="Login"></input><br>
-    <label id= "userName"></label>
 
-    <h6 class="post-tittle-categoria">Categoría</h6>
-    <select id = "postType">
-        <option value="Inteligencia Artificial">Inteligencia Artificial</option>
-        <option value="Realidad virtual">Realidad virtual</option>
-        <option value="Robótica">Robótica</option>
-        <option value="Ciberseguridad">Ciberseguridad</option>
-        <option value="Dispositivos móviles">Dispositivos móviles</option>
-        <option value="Curiosidades">Curiosidades</option>
+  <div class="cont-r-post m-a p-30 b-r mt-100">
+    <select id="postType" class="block mt-5 p-5 btn2">
+      <option value="Inteligencia Artificial">Inteligencia Artificial</option>
+      <option value="Realidad virtual">Realidad virtual</option>
+      <option value="Robótica">Robótica</option>
+      <option value="Ciberseguridad">Ciberseguridad</option>
+      <option value="Dispositivos móviles">Dispositivos móviles</option>
+      <option value="Curiosidades">Curiosidades</option>
     </select>
-    <input id = "titlePost" class="tittle-of-post" placeholder="Escriba Titulo" type="text"></input>
-    <input id= "multimedia" type="file" name="multimedia"/>
-    <img id="multmediaImage" src="" width="150" height="100"><br>
-    <input id = "descriptionPost" placeholder="Escribe aquí" type="text"></input>
-    <select id = "postPrivacy">
-        <option value="amigos">Amigos</option>
-        <option value="publico">Público</option>
-    </select>
-    <button id= "savePublicPost">Publicar</publicar>
-    <button id= "closePost">Cerrar</button>
+    <input id="titlePost" type="text" placeholder="Escriba Titulo" class="p-5">
+    <div class="cont-float">
+      <div class="w-60p">
+        <textarea id="descriptionPost" placeholder="Escribe aquí" class="p-5 texta"></textarea>
+      </div>
+      <div class="w-40p">
+        <img id="multmediaImage" src="../image/default-placeholder.png" class="btn2"/>
+      </div>
+    </div>
+    <div class="cont-float">
+
+      <div class="w-40p">
+        <select id="postPrivacy">
+          <option value="amigos">Amigos</option>
+          <option value="publico">Público</option>
+        </select>
+      </div>
+      <div class="w-60p">
+        <input type="file" id= "multimedia"/>
+      </div>
+
+    </div>
+
+    <div class="cont-float">
+      <button id="savePublicPost" class="btn btn1 m-a mt-15 right">Publicar</button>
+      <button id="closePost" class="btn btn1 m-a mt-15 right mr-5">Cerrar</button>
+    </div>
+
+  </div>
+  
     `;
   container.innerHTML = divContent;
 

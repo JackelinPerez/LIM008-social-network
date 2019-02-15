@@ -16,6 +16,6 @@ import { createPostBDFirestore } from "../src/lib/crudBD/crudUser/crudUser.js"
 
 describe('createPostBDFirestore'), () => {
     it('deberia ser una función'), () => {
-      expect(typeof (createPostBDFirestore)).toBe('function');
+      expect(typeof (createPostBDFirestore)).toBe('object');
     };
   };

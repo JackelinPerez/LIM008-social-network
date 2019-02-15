@@ -20,19 +20,17 @@ export const logOutUser = () => {
   return firebase.auth().signOut();
 };
 
-export const sendEmail = (config) => {
-  return firebase.auth().currentUser.email.sendEmailVerification(config);
+export const sendEmail = (userRegister, config) => {
+  return userRegister.sendEmailVerification(config);
 };
 
 export const passwordReset = (email) => {
   return firebase.auth().sendPasswordResetEmail(email);
 };
 
-export const userStateChange = (user) => {
-  firebase.auth().onAuthStateChanged((userState) => user.push(userState));
-  return user;
-}
-
-export const dataConnectUser = () => {
-  return firebase.auth().currentUser;
-}
+export const userStateChange = (callbackUser, objElements) => {
+  firebase.auth().onAuthStateChanged((userState) => {
+    callbackUser(userState, objElements);
+  });
+  return 1;
+};

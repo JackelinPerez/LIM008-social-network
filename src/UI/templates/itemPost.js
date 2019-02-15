@@ -4,9 +4,6 @@ export default (idPost, dataPost, deleteEdit, postWall) => {
   divContent.setAttribute('class', 'grid-item');
 
   const divContent_ = `
-            
-            
-            
       <div class="table w-100p">
       <div class="cell ta-l">
         <img id="userPhoto" src="${dataPost.fotoUsuario}" class="avatar-perfil">
@@ -61,8 +58,7 @@ export default (idPost, dataPost, deleteEdit, postWall) => {
       </span>
 
     </div>
-
-
+    
     <div id="wallComentItemPost_${idPost}" class="grid-container-comment">
     </div>
     `;

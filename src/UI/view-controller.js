@@ -1,6 +1,8 @@
 import itemPost from './templates/itemPost.js';
 import itemCommentPost from './templates/itemCommentPost.js';
-import { changeHash, getDayAndHour, objectCreateUserProfile, objectCreatePost, ObjectUpdatePost, deletAndEdit} from '../Util/util.js';
+import { changeHash, getDayAndHour, objectCreateUserProfile, objectCreatePost,
+  ObjectUpdatePost, deletAndEdit} from '../Util/util.js';
+import { messageAuth_1, messageAuth_2, messageAuth_3, messageAuth_4, messageAuth_5} from '../Util/util.js';
 import { createUser, authenticateFacebook, authenticateGoogle, logInUser, logOutUser,
   sendEmail, userStateChange, passwordReset} 
   from '../lib/authBD/authFireBase.js';
@@ -18,33 +20,23 @@ let userConnect, userConnectPhoto, userConnectName;
 
 export const createPost = (userPhoto, userName, postType, titlePost,
   descriptionPost, multimedia, mmultmediaImage, postPrivacy, savePublicPost, closePost) => {
-  let userPhoto_, userName_, userEmail_;
 
   console.log('Ingresa createPost');
   
-  firebase.auth().onAuthStateChanged((result) => {
-    if (result) {
-      userEmail_ = result.email;
-      readDocBDFireStore('Users', userEmail_)
-        .then((respDoc) => {
-          const saveDocumentUser = respDoc.data();
-          if (saveDocumentUser !== undefined) {
-            userPhoto_ = userPhoto.src = saveDocumentUser.foto;
-            userName_ = userName.innerHTML = saveDocumentUser.usuario;
-          }
-        });  
-    } else {
-      console.log('Usuario se desconecto');
-      changeHash('/inite');
-    }
-  });
-      
+  // EN CASO QUE LA PAGINA SE REFRESQUE
+  if (userConnect === undefined || userConnectPhoto === undefined || userConnectName === undefined ) {
+    changeHash('/home');
+  }
+  else{
+    const userEmail_ = userConnect;
+    const userPhoto_ = userConnectPhoto;
+    const userName_ = userConnectName;
+
 
   multimedia.onchange = (evt) => {
     let tgt = evt.target || window.event.srcElement,
       files = tgt.files;
   
-    // Si existe el archivo cargarlo
     if (FileReader && files && files.length) {
       let fr = new FileReader();
       fr.onload = () => {
@@ -74,6 +66,7 @@ export const createPost = (userPhoto, userName, postType, titlePost,
                 getDayAndHour(), postPrivacyValue, postTypeValue, titlePost.value, descriptionPost.value, getURL); 
               console.log(objDataUser);
             
+              // MAIN CREA EL POST MULTIMEDIA EN LA BD
               createPostBDFireStore('Post', objDataUser)
                 .then(() => console.log('documento se escribio correctamente en post'))
                 .catch((err) => console.log(err.message));            
@@ -83,6 +76,7 @@ export const createPost = (userPhoto, userName, postType, titlePost,
       objDataUser = objectCreatePost(userEmail_, userPhoto_, userName_,
         getDayAndHour(), postPrivacyValue, postTypeValue, titlePost.value, descriptionPost.value, '');
 
+      // MAIN CREA EL POST EN LA BD
       createPostBDFireStore('Post', objDataUser)
         .then(() => {
           console.log('documento se escribio correctamente en post');        
@@ -95,11 +89,13 @@ export const createPost = (userPhoto, userName, postType, titlePost,
   closePost.addEventListener('click', () => {
     changeHash('/home');
   });
+  }  
 };
 
 export const createCommentPost = (inputComment, wallComentPost, saveCommentPost, closeCommentPost) => {
   console.log('Usuario Conectado comment: ' + userConnect);
   console.log('idPostCommentar: ' + idPostCommentGlobal);
+  // EN CASO QUE LA PAGINA SE REFRESQUE
   if (userConnect === undefined || idPostCommentGlobal === undefined) {
     changeHash('/home');
     return 1;
@@ -115,6 +111,7 @@ export const createCommentPost = (inputComment, wallComentPost, saveCommentPost,
     
     readDocBDFireStore('Post', idPostCommentGlobal)
       .then((dataPost) => {
+
         const newArrayPostComment = dataPost.data().comentarios;
         let newObjectPostComment = {
           propietario: {
@@ -124,6 +121,8 @@ export const createCommentPost = (inputComment, wallComentPost, saveCommentPost,
           likes: []        
         };
         newArrayPostComment.push(newObjectPostComment);
+
+        // MAIN CREA COMENTARIOS EN LA BD
         createIdDocBDFireStore('Post', idPostCommentGlobal, {comentarios: newArrayPostComment})
           .then((result) => {
             console.log('Se guardo comentario correctamente');
@@ -143,14 +142,15 @@ export const editPost = (userPhoto_, userName_, postType_, titlePost_, descripti
   multmediaImage_, postPrivacy_, savePublicPost_, closePost_) => {
   console.log('Ingresa EditPost');
   console.log('idPostGlobal: ' + idPostGlobal);
-  
+
+  // EN CASO QUE LA PAGINA SE REFRESQUE
   if (idPostGlobal === undefined) changeHash('/home');
   else {
     readDocBDFireStore('Post', idPostGlobal)
       .then((dataPost) => {
         const objdataPost = dataPost.data();
 
-        // se cargan la dataPost de la BD
+        // Se carga el contenido del POST en la pantalla
         userPhoto_.src = objdataPost.fotoUsuario;
         userName_.innerHTML = objdataPost.nombreUsuario;
         titlePost_.value = objdataPost.titulo;
@@ -180,12 +180,21 @@ export const editPost = (userPhoto_, userName_, postType_, titlePost_, descripti
   
           objDataUser = ObjectUpdatePost(postPrivacyValue, postTypeValue, titlePost_.value, descriptionPost_.value, objdataPost.contenido.multimedia);
   
-          updateDocBDFireStore('Post', idPostGlobal, objDataUser)
+          // MAIN EDITA POST EN LA BD
+          let confirmUpdate = confirm("Deseas realmente actualizar tus cambios?");
+          if(confirmUpdate === true) {
+            updateDocBDFireStore('Post', idPostGlobal, objDataUser)
             .then(() => {
               console.log('documento se actualizo correctamente en post');
               changeHash('/home') ;
             })
-            .catch(() => console.log(err.message));    
+            .catch(() => console.log(err.message));   
+          }
+          else {
+            console.log('documento No se actualizo por ordenes del usuario ');
+            changeHash('/home') ;
+          }
+ 
         });
       }) 
       .catch((err) => {
@@ -226,6 +235,7 @@ const stateUser = (changeUserStatus, elements) => {
         }
       });
 
+      // MAIN CAPTURA LOS EVENTOS DE CADA POST PUBLICADO
       elements.postWall.addEventListener('click', () => {
       const targetEventID = event.target.id;
       itemViewPost(targetEventID, userConnect);
@@ -281,6 +291,7 @@ const detectPromisesCreateUser = (funct) => {
             
             console.log(objDataUser);
             
+            // MAIN CREA EL USUARIO EN LA BD POR AUTENTIC FACE/GOOGLE
             createIdDocBDFireStore('Users', objDataUser.correo, objDataUser)
               .then(() => console.log('documento se escribio correctamente'))
               .catch(() => console.log(err.message));                
@@ -306,7 +317,8 @@ export const registerOnSubmit = (buttonRegister) => {
 
 export const btnAcceptRegisterAndSendToHome = (userName, userEmail, userPassword, buttonAcept) => {
   buttonAcept.addEventListener('click', () => {
-    createUser(userEmail.value, userPassword.value)
+    if(userName.value.length>0){
+      createUser(userEmail.value, userPassword.value)
       .then((result) => {
         let objctCreate = objectCreateUserProfile(userName.value, result.user.email, '', getDayAndHour());
 
@@ -322,17 +334,28 @@ export const btnAcceptRegisterAndSendToHome = (userName, userEmail, userPassword
             alert('No pudimos enviarte el email de confirmacion, intenta volver a registrarte');
           });
 
+          // MAIN CREA EL USUARIO EN LA BD POR AUTENTIC REGISTRO
           createIdDocBDFireStore('Users', result.user.email, objctCreate)
           .then(() => console.log('documento se escribio correctamente'))
-          .catch(() => console.log(err.message));
+          .catch((err) => {
+            console.log(err.message);
+          });
 
         changeHash('/inite') ;
       })
       .catch((err) => {
-        console.log(err.code);
-        console.log(err.credential);
-        alert(err.message !== undefined ? err.message : err.email);  
-      });  
+        console.log(err.message);
+        if(err.message === messageAuth_1)
+        alert('Usuario ya existe en la BD, por favor usar otro correo');
+        if(err.message === messageAuth_2)
+        alert('El email tiene un formato incorrecto por favor de verificar si cumple con el formato: ***@***.***');
+        if(err.message === messageAuth_3)
+        alert('Tu contraseña de tener almenos 6 caracteres');  
+      });
+    }
+    else {
+      alert('No haz escrito tu nombre de Usuario');
+    }
   });
 };
 
@@ -344,15 +367,27 @@ export const loginUser = (buttonLogin) => {
 
 export const btnAcceptLoginAndSendToHome = (inputEmail, inputPassword, buttonAcceptLogin, missedPassword) => {
   buttonAcceptLogin.addEventListener('click', () => {
+    // MAIN LOGEA AL USUARIO EN LA REDSOCIAL
     logInUser(inputEmail.value, inputPassword.value)
       .then(() => changeHash('/home'))
-      .catch((err) => console.log(err.message));    
+      .catch((err) => {
+        console.log(err.message);
+        if(err.message === messageAuth_2)
+        alert('El email tiene un formato incorrecto por favor de verificar si cumple con el formato: ***@***.***');
+        if(err.message === messageAuth_4)
+        alert('El usuario No esta registrado');
+        if(err.message === messageAuth_5)
+        alert('Tu contraseña es incorrecta');                
+      });    
   });
 
   missedPassword.addEventListener('click', () => {
+    // MAIN RESETEA EL PASSWORD DEL USUARIO EN LA REDSOCIAL
     passwordReset(inputEmail.value)
       .then(() => alert('Se te envió un correo para la recuperación de tu contraseña,sigue los pasos'))
-      .catch((err) => console.log(err.message));    
+      .catch((err) => {
+        console.log(err.message);
+      });    
   });  
 };
 
@@ -360,6 +395,7 @@ const viewAllCommentPost = (postWallComment, postCollection, postIdCollection) =
   console.log('postCollection: ' + postCollection + ' postIdCollection: ' + postIdCollection);
   
   if (postWallComment !== undefined || postWallComment === null) {
+    // MAIN OBTIENE TODOS LOS COMENTARIOS DEL POST QUE SELECCIONO EL USUARIO
     readDocBDFireStore(postCollection, postIdCollection)
       .then((docPost) => {
         postWallComment.innerHTML = '';
@@ -382,14 +418,16 @@ const getAllPost = (dataAllPost, elementsWall) => {
   let arrObjWall = [];
   elementsWall.postWall.innerHTML = '';
 
+  // MAIN OBTIENE TODOS LOS POST DE LA REDSOCIAL
   dataAllPost.forEach((ele) => {
     arrAllPost.push({ id: ele.id, ...ele.data()});
   });
 
-  if (elementsWall.key3.length > 0 && elementsWall.value3.length > 0)
+  // MAIN EVALUA EL TIPO DE FILTRO DE LOS POST
+  if (elementsWall.key3.length > 0 && elementsWall.value3.length > 0) // FILTROS DE MENU
     arrObjWall = arrAllPost.filter(ele => ((ele[elementsWall.key1] === elementsWall.value1 || 
       ele[elementsWall.key2] === elementsWall.value2) && (ele[elementsWall.key3] === elementsWall.value3)));
-  else
+  else // FILTROS PRIVADO Y PUBLICO
     arrObjWall = arrAllPost.filter(ele => (ele[elementsWall.key1] === elementsWall.value1 || 
       ele[elementsWall.key2] === elementsWall.value2));
 
@@ -425,15 +463,18 @@ const viewAllPost = (postWall, userConnect, postCollection, key1, value1, key2, 
 
 export const accesWithFbOrGoogle = (buttonFacebook, buttonGoogle) => {
   buttonFacebook.addEventListener('click', () => {
+    // MAIN EL USUARIO SE REGISTRA POR AUTENTICACION DE FACEBOOK EN LA BD
     detectPromisesCreateUser(authenticateFacebook());
   });
   buttonGoogle.addEventListener('click', () => {
+    // MAIN EL USUARIO SE REGISTRA POR AUTENTICACION DE GOOGLE EN LA BD
     detectPromisesCreateUser(authenticateGoogle());
   });
 };
 
 export const itemViewPost = (targetID, nameUserConnect) => {
   if (targetID) {
+    // MAIN CAPTURA EVENTO DE EDITAR CONTENIDO DEL POST
     if (targetID.indexOf('editPost_') > -1) {
       const idPost = targetID.substr(('editPost_').length, targetID.length - ('editPost_').length);
       console.log('id= ' + idPost);
@@ -441,18 +482,26 @@ export const itemViewPost = (targetID, nameUserConnect) => {
       idPostGlobal = idPost;
       editCreatePost = 0;
       changeHash('/createPost');
-    } else if (targetID.indexOf('deletePost_') > -1) {
+    }
+    // MAIN CAPTURA EVENTO DE ELIMINAR POST
+    else if (targetID.indexOf('deletePost_') > -1) {
       const idPost = targetID.substr(('deletePost_').length, targetID.length - ('deletePost_').length);
       const getIdContainerItem = document.getElementById(idPost);
-      deleteDocFireStore('Post', idPost)
+      // MAIN ELIMINA AL POST
+      let confirmDeletePost = confirm("Deseas realmente eliminar el Post?");
+      if(confirmDeletePost === true){
+        deleteDocFireStore('Post', idPost)
         .then(() => {
           postWall.removeChild(getIdContainerItem);
           console.log('Se elimino correctamente Post');
         })
         .catch((err) => {
           console.log('err= ' + err.message);
-        });
-    } else if (targetID.indexOf('likes_') > -1) {
+        });        
+      }
+    }
+    // MAIN CAPTURA EVENTO DE DAR LIKE AL CONTENIDO DEL POST
+    else if (targetID.indexOf('likes_') > -1) {
       // logica de likes
       const idPost = targetID.substr(('likes_').length, targetID.length - ('likes_').length);
       console.log('id_likes= ' + idPost);
@@ -475,6 +524,7 @@ export const itemViewPost = (targetID, nameUserConnect) => {
 
           console.log('newArrayLikes: ' + newArrayLikes);
 
+          // MAIN GUARDA O BORRA EL LIKE DEL POST
           createIdDocBDFireStore('Post', idPost, {likes: newArrayLikes})
             .then((result) => {
               if (detectLike.length > 0) document.getElementById(targetID).style.backgroundColor = '#FFFFFF';
@@ -487,7 +537,9 @@ export const itemViewPost = (targetID, nameUserConnect) => {
         .catch((err) => {
           console.log(err.message);
         });
-    } else if (targetID.indexOf('comment_') > -1) {
+    }
+    // MAIN CAPTURA EVENTO DE COMENTAR AL CONTENIDO DEL POST
+    else if (targetID.indexOf('comment_') > -1) {
       const idPost = targetID.substr(('comment_').length, targetID.length - ('comment_').length);
       console.log('id_comment= ' + idPost);
       idPostCommentGlobal = idPost;

@@ -3,15 +3,20 @@ import { btnAcceptRegisterAndSendToHome} from '../view-controller.js';
 export default () => {
   const container = document.getElementById('container');
   const divContent = `
-  <h2 class="text-center">únete a nuestra comunidad</h2>
-  <form>
-    <input type="text" id="createUsername" class="username" placeholder="nombre de usuario">
-    <input type="text" id="createEmail"  class="correo" placeholder="correo">
-    <input type="password" id="createPassword" class="password" placeholder="constraseña">
-  </form>
-  <button class="btn-register" id="buttonAcceptRegister">
-  Registrar
-  </button>
+  <div class="cont-register-login m-a p-30 b-r mt-100">
+    <h2 class="m-10">Únete a nuestra comunidad</h2>
+    <form>
+      <label for="createUsername" class="mt-8">Nombre de usuario :</label>
+      <input type="text" id="createUsername" class="mt-5 p-5" placeholder="Nombre de usuario">
+
+      <label for="createEmail" class="mt-8">Correo :</label>
+      <input type="text" id="createEmail" class="mt-5 p-5" placeholder="Correo">
+
+      <label for="createPassword" class="mt-8">Contraseña :</label>
+      <input type="password" id="createPassword" class="mt-5 p-5" placeholder="Constraseña">
+    </form>
+    <button class="btn-register m-a block mt-15" id="buttonAcceptRegister">Registrar</button>
+  </div>
   `;
   container.innerHTML = divContent;
 

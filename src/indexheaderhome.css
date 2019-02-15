@@ -1,39 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Nova+Round|Reenie+Beanie|Righteous|Saira+Semi+Condensed');
-
-
-
-.header {
-    overflow: hidden;
-}
-
-.logo {
-    float: left;
-    margin: 1px;
-   font-family: 'Righteous',cursive;
- font-size: 27px;
- color: #333333;
- }
- 
- 
- .header-right {
-    float: right;
-    }
-
- 
- .slogan {
-    font-family: Righteous;
-    font-size: 18px;
-    text-align: center;
-    color: #333333;
- }
- 
- .ways-of-inite {
-     text-align: center;
- }
-
- .btn-register-in-inite {
-     display: none;
- }
 
  .menu-muro {
      display: none;

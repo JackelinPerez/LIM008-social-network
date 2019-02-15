@@ -58,7 +58,7 @@ Poder crear mi publicación, y visualizarla en el muro de la red social
 Poder editar mi publicación (descripción de la publicación)
 Poder eliminar mi publicación pidiendo una confirmación de seguridad
 
-! [PLANIFICACIÓN](https://ibb.co/M7tm9Bw)
+![PLANIFICACIÓN](https://ibb.co/M7tm9Bw)
 
 ### _Prototipado_
 

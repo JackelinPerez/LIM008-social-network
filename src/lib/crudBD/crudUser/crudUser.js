@@ -1,4 +1,4 @@
-export const createBDFireStore = (idCollection, idUser, obj) => {
+export const createIdDocBDFireStore = (idCollection, idUser, obj) => {
   return firebase.firestore().collection(idCollection).doc(idUser).set(obj, { merge: true});
 };  
 
@@ -6,21 +6,26 @@ export const createPostBDFireStore = (idCollection, obj) => {
   return firebase.firestore().collection(idCollection).add(obj);
 };  
 
-export const readBDFireStore = (idCollection) => {
-  // return firebase.firestore().collection(idCollection).get();
-  return firebase.firestore().collection(idCollection);
-};
-
 export const readDocBDFireStore = (idCollection, idUser) => {
   return firebase.firestore().collection(idCollection).doc(idUser).get();
 };
 
-// Actualiza o incluye campos en el documento
-export const updateBDFireStore = (idCollection, idUser, obj) => {
+export const readCollectionBDFireStore = (idCollection, callbackPost, objElements) => {
+  firebase.firestore().collection(idCollection).onSnapshot((dataAllPost) => {
+    callbackPost(dataAllPost, objElements);
+   });
+  return 1;
+};
+
+export const updateDocBDFireStore = (idCollection, idUser, obj) => {
   return firebase.firestore().collection(idCollection).doc(idUser).update(obj);
 };
 
-export const deleteUserFireStore = (idCollectionUser, idCollectionPost, idUser, nameUser) => {
+export const deleteDocFireStore = (idCollection, idUser) => {
+  return firebase.firestore().collection(idCollection).doc(idUser).delete();
+};
+
+export const deleteUserFireStore = (idCollectionUser, idCollectionPost, idUser) => {
   // borrar de la collection Post los post del usuario que se eliminara
   firebase.firestore().collection(idCollectionPost).where('correoUsuario', '==', idUser).get()
     .then((dataPost) => {
@@ -41,14 +46,6 @@ export const deleteUserFireStore = (idCollectionUser, idCollectionPost, idUser, 
     .catch((err) => console.log('No pudo eliminar collection Usuario: ' + err.message));
 };
 
-export const deleteDocFireStore = (idCollection, idUser) => {
-  return firebase.firestore().collection(idCollection).doc(idUser).delete();
-};
-
-export const filterBDFile = (idCollection, key, value) => {
-  // return firebase.firestore().collection(idCollection).where(key, '==', value);
-  return firebase.firestore().collection(idCollection);
-};
 export const sendImagePost = (imageASubir) => {
   return firebase.storage().ref().child('images/' + imageASubir.name).put(imageASubir);
 };

@@ -16,7 +16,6 @@ let idPostGlobal;
 let userConnect, userConnectPhoto, userConnectName;
 
 
-
 export const createPost = (userPhoto, userName, postType, titlePost,
   descriptionPost, multimedia, mmultmediaImage, postPrivacy, savePublicPost, closePost) => {
   let userPhoto_, userName_, userEmail_;
@@ -98,10 +97,10 @@ export const createPost = (userPhoto, userName, postType, titlePost,
   });
 };
 
-export const createCommentPost = (inputComment,wallComentPost, saveCommentPost, closeCommentPost) => {
-    console.log('Usuario Conectado comment: '+userConnect);
-    console.log('idPostCommentar: '+idPostCommentGlobal);
-  if (userConnect === undefined || idPostCommentGlobal === undefined){
+export const createCommentPost = (inputComment, wallComentPost, saveCommentPost, closeCommentPost) => {
+  console.log('Usuario Conectado comment: ' + userConnect);
+  console.log('idPostCommentar: ' + idPostCommentGlobal);
+  if (userConnect === undefined || idPostCommentGlobal === undefined) {
     changeHash('/home');
     return 1;
   }
@@ -110,101 +109,95 @@ export const createCommentPost = (inputComment,wallComentPost, saveCommentPost, 
     changeHash('/home');
   });
 
-  viewAllCommentPost(wallComentPost,'Post',idPostCommentGlobal);
+  viewAllCommentPost(wallComentPost, 'Post', idPostCommentGlobal);
 
-  saveCommentPost.addEventListener('click',() =>{
-
+  saveCommentPost.addEventListener('click', () => {
     // console.log('userConnectPhoto: '+ userConnectPhoto);
     // console.log('userConnectName: '+userConnectName);
     
     readDocBDFireStore('Post', idPostCommentGlobal)
-    .then((dataPost)=>{
-      const newArrayPostComment = dataPost.data().comentarios;
-      let newObjectPostComment = {
+      .then((dataPost) => {
+        const newArrayPostComment = dataPost.data().comentarios;
+        let newObjectPostComment = {
           propietario: {
-              nombre: userConnectName,
-              foto: userConnectPhoto},
+            nombre: userConnectName,
+            foto: userConnectPhoto},
           contenido: inputComment.value,
           likes: []        
-      }
-      newArrayPostComment.push(newObjectPostComment);
-      createBDFireStore('Post', idPostCommentGlobal, {comentarios: newArrayPostComment})
-      .then((result) => {
-        console.log('Se guardo comentario correctamente');
-        changeHash('/home');
+        };
+        newArrayPostComment.push(newObjectPostComment);
+        createBDFireStore('Post', idPostCommentGlobal, {comentarios: newArrayPostComment})
+          .then((result) => {
+            console.log('Se guardo comentario correctamente');
+            changeHash('/home');
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });      
       })
       .catch((err) => {
         console.log(err.message);
-      });      
-    })
-    .catch((err) =>{
-      console.log(err.message);
-    });
-
+      });
   });
-
-}
+};
 export const editPost = (userPhoto_, userName_, postType_, titlePost_, descriptionPost_, multimedia_,
   multmediaImage_, postPrivacy_, savePublicPost_, closePost_) => {
-    console.log('Ingresa EditPost');
-    console.log('idPostGlobal: ' + idPostGlobal);
+  console.log('Ingresa EditPost');
+  console.log('idPostGlobal: ' + idPostGlobal);
   
   if (idPostGlobal === undefined) changeHash('/home');
   else {
     readDocBDFireStore('Post', idPostGlobal)
-    .then((dataPost) => {
-      const objdataPost = dataPost.data();
+      .then((dataPost) => {
+        const objdataPost = dataPost.data();
 
-      // se cargan la dataPost de la BD
-      userPhoto_.src = objdataPost.fotoUsuario;
-      userName_.innerHTML = objdataPost.nombreUsuario;
-      titlePost_.value = objdataPost.titulo;
-      descriptionPost_.value = objdataPost.contenido.descripcion;
-      multmediaImage_.src = objdataPost.contenido.multimedia;
+        // se cargan la dataPost de la BD
+        userPhoto_.src = objdataPost.fotoUsuario;
+        userName_.innerHTML = objdataPost.nombreUsuario;
+        titlePost_.value = objdataPost.titulo;
+        descriptionPost_.value = objdataPost.contenido.descripcion;
+        multmediaImage_.src = objdataPost.contenido.multimedia;
 
-      for (let i, j = 0; i = postType_.options[j]; j++) {
-        if (i.value === objdataPost.categoria) {
-          postType_.selectedIndex = j;
-          break;
+        for (let i, j = 0; i = postType_.options[j]; j++) {
+          if (i.value === objdataPost.categoria) {
+            postType_.selectedIndex = j;
+            break;
+          }
         }
-      }
 
-      for (let i, j = 0; i = postPrivacy_.options[j]; j++) {
-        if (i.value === objdataPost.privacidad) {
-          postPrivacy_.selectedIndex = j;
-          break;
+        for (let i, j = 0; i = postPrivacy_.options[j]; j++) {
+          if (i.value === objdataPost.privacidad) {
+            postPrivacy_.selectedIndex = j;
+            break;
+          }
         }
-      }
 
-      // Se captura los cambios del usuario
+        // Se captura los cambios del usuario
 
-      savePublicPost_.addEventListener('click', () => {
-        let objDataUser = {};
-        const postPrivacyValue = postPrivacy.options[postPrivacy.selectedIndex].value;
-        const postTypeValue = postType.options[postType.selectedIndex].value;
+        savePublicPost_.addEventListener('click', () => {
+          let objDataUser = {};
+          const postPrivacyValue = postPrivacy.options[postPrivacy.selectedIndex].value;
+          const postTypeValue = postType.options[postType.selectedIndex].value;
   
-        objDataUser = ObjectUpdatePost(postPrivacyValue, postTypeValue, titlePost_.value, descriptionPost_.value, objdataPost.contenido.multimedia);
+          objDataUser = ObjectUpdatePost(postPrivacyValue, postTypeValue, titlePost_.value, descriptionPost_.value, objdataPost.contenido.multimedia);
   
-        updateBDFireStore('Post', idPostGlobal, objDataUser)
-          .then(() => {
-            console.log('documento se actualizo correctamente en post');
-            changeHash('/home') ;
-          })
-          .catch(() => console.log(err.message));    
+          updateBDFireStore('Post', idPostGlobal, objDataUser)
+            .then(() => {
+              console.log('documento se actualizo correctamente en post');
+              changeHash('/home') ;
+            })
+            .catch(() => console.log(err.message));    
+        });
+      }) 
+      .catch((err) => {
+        console.log(err.message);
+        changeHash('/inite');
       });
-    }) 
-    .catch((err) => {
-      console.log(err.message)
-      changeHash('/inite');
+  
+    closePost_.addEventListener('click', () => {
+      changeHash('/home');
     });
-  
-  closePost_.addEventListener('click', () => {
-    changeHash('/home');
-  });
   }
-
-  
-
 };
 
 export const mainRedSocial = (userPhoto, userName, buttonDeleteUser, buttonLogOut, createPost, postWall, filterTypePost) => {
@@ -258,7 +251,7 @@ export const mainRedSocial = (userPhoto, userName, buttonDeleteUser, buttonLogOu
   });
 
   buttonDeleteUser.addEventListener('click', () => {
-    deleteUserFireStore('Users', userConnect);
+    deleteUserFireStore('Users','Post', userConnect, userConnectName);
     changeHash('/inite') ;
   });
 
@@ -360,24 +353,28 @@ export const btnAcceptLoginAndSendToHome = (inputEmail, inputPassword, buttonAcc
 };
 
 const viewAllCommentPost = (postWallComment, postCollection, postIdCollection) => {
-
-  console.log('postCollection: '+postCollection + ' postIdCollection: '+postIdCollection);
+  console.log('postCollection: ' + postCollection + ' postIdCollection: ' + postIdCollection);
   
-if(postWallComment !== undefined || postWallComment === null) {
-  filterBDFile(postCollection).doc(postIdCollection)
-  .onSnapshot((docPost) =>{
-    postWallComment.innerHTML = '';
-    const allPostComment = docPost.data().comentarios;
-    console.log('docPost: '+ Object.keys(docPost.data()));
-    allPostComment.forEach((dataCommentPost, idCommentPost) => {
-      itemCommentPost(idCommentPost, dataCommentPost, '', postWallComment);
-    })
-  })
-}
-}
+  if (postWallComment !== undefined || postWallComment === null) {
+    readDocBDFireStore(postCollection, postIdCollection)
+      .then((docPost) => {
+        postWallComment.innerHTML = '';
+        const allPostComment = docPost.data().comentarios;
+        console.log('docPost: ' + Object.keys(docPost.data()));
+        allPostComment.forEach((dataCommentPost, idCommentPost) => {
+          itemCommentPost(idCommentPost, dataCommentPost, '', postWallComment);
+        });
+      })
+      .catch((err) => {
+        console.log('err comment: '+ err.message);
+        
+      });
+
+  }
+};
 
 const viewAllPost = (postWall, userConnect, postCollection, key1, value1, key2, value2, key3, value3) => {
-  filterBDFile(postCollection)
+  readBDFireStore(postCollection)
     .onSnapshot((doc) => {
       const arrPost = [];
       let objWall = [];
@@ -410,7 +407,7 @@ const viewAllPost = (postWall, userConnect, postCollection, key1, value1, key2, 
         else itemPost(idPost, dataPost, '', postWall, colorLikeInit);
 
         const wallComentPost = document.getElementById(`wallComentItemPost_${idPost}`);
-        viewAllCommentPost(wallComentPost,'Post',idPost);
+        viewAllCommentPost(wallComentPost, 'Post', idPost);
       });
     });
 };
@@ -469,19 +466,18 @@ export const itemViewPost = (targetID, nameUserConnect) => {
           console.log('newArrayLikes: ' + newArrayLikes);
 
           createBDFireStore('Post', idPost, {likes: newArrayLikes})
-          .then((result) => {
-            if (detectLike.length > 0) document.getElementById(targetID).style.backgroundColor = '#FFFFFF';
-            else document.getElementById(targetID).style.backgroundColor = '#de555e';
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-
+            .then((result) => {
+              if (detectLike.length > 0) document.getElementById(targetID).style.backgroundColor = '#FFFFFF';
+              else document.getElementById(targetID).style.backgroundColor = '#de555e';
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
         })
         .catch((err) => {
           console.log(err.message);
         });
-    } else if (targetID.indexOf('comment_')>-1) {
+    } else if (targetID.indexOf('comment_') > -1) {
       const idPost = targetID.substr(('comment_').length, targetID.length - ('comment_').length);
       console.log('id_comment= ' + idPost);
       idPostCommentGlobal = idPost;

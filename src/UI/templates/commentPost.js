@@ -1,8 +1,8 @@
 import {createCommentPost} from '../view-controller.js';
 
 export default (idPost) => {
-    const container = document.getElementById('container');
-    const divContent = `
+  const container = document.getElementById('container');
+  const divContent = `
     <div id = "wallComentPost_${idPost}" class="grid-container-comment">
     </div>
     <input id = "inputComment_${idPost}" class="tittle-of-post" placeholder="Comenta..." type="text"></input>
@@ -16,9 +16,8 @@ export default (idPost) => {
   const saveCommentPost = document.getElementById(`saveCommentPost_${idPost}`);
   const closeCommentPost = document.getElementById(`closeCommentPost_${idPost}`);
 
-  createCommentPost(inputComment,wallComentPost, saveCommentPost, closeCommentPost);
+  createCommentPost(inputComment, wallComentPost, saveCommentPost, closeCommentPost);
   return 1;
-}
-
+};
 
 

@@ -2,11 +2,11 @@ import itemPost from './templates/itemPost.js';
 import itemCommentPost from './templates/itemCommentPost.js';
 import { changeHash, getDayAndHour, objectCreateUserProfile, objectCreatePost, ObjectUpdatePost, deletAndEdit} from '../Util/util.js';
 import { createUser, authenticateFacebook, authenticateGoogle, logInUser, logOutUser,
-  sendEmail, userStateChange, dataConnectUser, passwordReset} 
+  sendEmail, userStateChange, passwordReset} 
   from '../lib/authBD/authFireBase.js';
 
-import { createBDFireStore, createPostBDFireStore, readBDFireStore, readDocBDFireStore,
-  updateBDFireStore, deleteUserFireStore, deleteDocFireStore, filterBDFile, sendImagePost}
+import { createIdDocBDFireStore, createPostBDFireStore, readCollectionBDFireStore, readDocBDFireStore,
+  updateDocBDFireStore, deleteUserFireStore, deleteDocFireStore, sendImagePost}
   from '../lib/crudBD/crudUser/crudUser.js';
 
 export let editCreatePost = 0;
@@ -112,8 +112,6 @@ export const createCommentPost = (inputComment, wallComentPost, saveCommentPost,
   viewAllCommentPost(wallComentPost, 'Post', idPostCommentGlobal);
 
   saveCommentPost.addEventListener('click', () => {
-    // console.log('userConnectPhoto: '+ userConnectPhoto);
-    // console.log('userConnectName: '+userConnectName);
     
     readDocBDFireStore('Post', idPostCommentGlobal)
       .then((dataPost) => {
@@ -126,7 +124,7 @@ export const createCommentPost = (inputComment, wallComentPost, saveCommentPost,
           likes: []        
         };
         newArrayPostComment.push(newObjectPostComment);
-        createBDFireStore('Post', idPostCommentGlobal, {comentarios: newArrayPostComment})
+        createIdDocBDFireStore('Post', idPostCommentGlobal, {comentarios: newArrayPostComment})
           .then((result) => {
             console.log('Se guardo comentario correctamente');
             changeHash('/home');
@@ -140,6 +138,7 @@ export const createCommentPost = (inputComment, wallComentPost, saveCommentPost,
       });
   });
 };
+
 export const editPost = (userPhoto_, userName_, postType_, titlePost_, descriptionPost_, multimedia_,
   multmediaImage_, postPrivacy_, savePublicPost_, closePost_) => {
   console.log('Ingresa EditPost');
@@ -181,7 +180,7 @@ export const editPost = (userPhoto_, userName_, postType_, titlePost_, descripti
   
           objDataUser = ObjectUpdatePost(postPrivacyValue, postTypeValue, titlePost_.value, descriptionPost_.value, objdataPost.contenido.multimedia);
   
-          updateBDFireStore('Post', idPostGlobal, objDataUser)
+          updateDocBDFireStore('Post', idPostGlobal, objDataUser)
             .then(() => {
               console.log('documento se actualizo correctamente en post');
               changeHash('/home') ;
@@ -200,66 +199,71 @@ export const editPost = (userPhoto_, userName_, postType_, titlePost_, descripti
   }
 };
 
-export const mainRedSocial = (userPhoto, userName, buttonDeleteUser, buttonLogOut, createPost, postWall, filterTypePost) => {
-  // let userConnect;
+const stateUser = (changeUserStatus, elements) => {
 
-  firebase.auth().onAuthStateChanged((result) => {
-    if (result) {
-      console.log('Usuario conectado es: ' + result.email);      
-      userConnect = result.email;  
-      readDocBDFireStore('Users', userConnect)
-        .then((respDoc) => {
-          const saveDocumentUser = respDoc.data();
-          if (saveDocumentUser !== undefined) {
-            userConnectPhoto = userPhoto.src = saveDocumentUser.foto;
-            userConnectName = userName.innerHTML = saveDocumentUser.usuario;
+  if (changeUserStatus) {
+    console.log('Usuario conectado es: ' + changeUserStatus.email);      
+    userConnect = changeUserStatus.email;  
+    readDocBDFireStore('Users', userConnect)
+      .then((respDoc) => {
+        const saveDocumentUser = respDoc.data();
+        if (saveDocumentUser !== undefined) {
+          userConnectPhoto = elements.userPhoto.src = saveDocumentUser.foto;
+          userConnectName = elements.userName.innerHTML = saveDocumentUser.usuario;
 
-            viewAllPost(postWall, userConnect, 'Post', 'nombreUsuario', saveDocumentUser.usuario,
-              'privacidad', 'publico', '', '');
+          viewAllPost(elements.postWall, userConnect, 'Post', 'nombreUsuario', saveDocumentUser.usuario,
+            'privacidad', 'publico', '', '');
 
-            filterTypePost.addEventListener('change', () => {        
-              const postTypeValue = filterTypePost.options[filterTypePost.selectedIndex].value;  
-              if (postTypeValue === 'Todos')
-                viewAllPost(postWall, userConnect, 'Post', 'nombreUsuario', saveDocumentUser.usuario,
-                  'privacidad', 'publico', '', ''); 
-              else
-                viewAllPost(postWall, userConnect, 'Post', 'nombreUsuario', saveDocumentUser.usuario,
-                  'privacidad', 'publico', 'categoria', postTypeValue);
-            });
-          }
-        });
-    
-      postWall.addEventListener('click', () => {
-        const targetEventID = event.target.id;
-        itemViewPost(targetEventID, userConnect);
+            elements.filterTypePost.addEventListener('change', () => {        
+            const postTypeValue = elements.filterTypePost.options[elements.filterTypePost.selectedIndex].value;  
+            if (postTypeValue === 'Todos')
+              viewAllPost(elements.postWall, userConnect, 'Post', 'nombreUsuario', saveDocumentUser.usuario,
+                'privacidad', 'publico', '', ''); 
+            else
+              viewAllPost(elements.postWall, userConnect, 'Post', 'nombreUsuario', saveDocumentUser.usuario,
+                'privacidad', 'publico', 'categoria', postTypeValue);
+          });
+        }
       });
-    } else {
-      console.log('Usuario No conectado');
+
+      elements.postWall.addEventListener('click', () => {
+      const targetEventID = event.target.id;
+      itemViewPost(targetEventID, userConnect);
+    });
+
+    elements.createPost.addEventListener('click', () => {
+      editCreatePost = 1;
+      changeHash('/createPost');
+    });
+
+    elements.buttonDeleteUser.addEventListener('click', () => {
+      deleteUserFireStore('Users','Post', userConnect, userConnectName);
       changeHash('/inite') ;
-    }    
-  });
+    });    
 
-  buttonLogOut.addEventListener('click', () => {
-    logOutUser()
-      .then(() => {
-        console.log('Usuario fuera de session');
-        changeHash('/inite') ;
-      })
-      .catch((err) => {
-        console.log(err.message);
-      }); 
-  });
-
-  buttonDeleteUser.addEventListener('click', () => {
-    deleteUserFireStore('Users','Post', userConnect, userConnectName);
+    elements.buttonLogOut.addEventListener('click', () => {
+      logOutUser()
+        .then(() => {
+          console.log('Usuario fuera de session');
+          changeHash('/inite') ;
+        })
+        .catch((err) => {
+          console.log(err.message);
+        }); 
+    });
+  
+  } else {
+    console.log('Usuario No conectado');
     changeHash('/inite') ;
-  });
+  }  
+}
 
-  createPost.addEventListener('click', () => {
-    editCreatePost = 1;
-    changeHash('/createPost');
-  });
+export const mainRedSocial = (userPhoto, userName, buttonDeleteUser, buttonLogOut, createPost, postWall, filterTypePost) => {
 
+  const objElements = {
+    userPhoto,userName,postWall,filterTypePost,createPost,buttonDeleteUser,buttonLogOut
+  }
+  userStateChange(stateUser, objElements);
   return 1;
 };
 
@@ -277,7 +281,7 @@ const detectPromisesCreateUser = (funct) => {
             
             console.log(objDataUser);
             
-            createBDFireStore('Users', objDataUser.correo, objDataUser)
+            createIdDocBDFireStore('Users', objDataUser.correo, objDataUser)
               .then(() => console.log('documento se escribio correctamente'))
               .catch(() => console.log(err.message));                
           } else console.log('Usuario ya existe en la BD');
@@ -306,19 +310,19 @@ export const btnAcceptRegisterAndSendToHome = (userName, userEmail, userPassword
       .then((result) => {
         let objctCreate = objectCreateUserProfile(userName.value, result.user.email, '', getDayAndHour());
 
-        alert(`Se te ha enviado un mensaje de correo electronico:${result.user.email}
-          Por favor de verificarlo para terminar con el proceso! Gracias`);
-
         const config = {
           url: 'http://localhost:8887/src'
         };
-        // sendEmail(config)
-        result.user.sendEmailVerification(config)
+          sendEmail(result.user, config)
+          .then(() => {
+            alert(`Se te ha enviado un mensaje de correo electronico:${result.user.email}
+            Por favor de verificarlo para terminar con el proceso! Gracias`);
+          })
           .catch((err) => {
-            alert(err.message);
+            alert('No pudimos enviarte el email de confirmacion, intenta volver a registrarte');
           });
 
-        createBDFireStore('Users', result.user.email, objctCreate)
+          createIdDocBDFireStore('Users', result.user.email, objctCreate)
           .then(() => console.log('documento se escribio correctamente'))
           .catch(() => console.log(err.message));
 
@@ -373,43 +377,49 @@ const viewAllCommentPost = (postWallComment, postCollection, postIdCollection) =
   }
 };
 
+const getAllPost = (dataAllPost, elementsWall) => {
+  const arrAllPost = [];
+  let arrObjWall = [];
+  elementsWall.postWall.innerHTML = '';
+
+  dataAllPost.forEach((ele) => {
+    arrAllPost.push({ id: ele.id, ...ele.data()});
+  });
+
+  if (elementsWall.key3.length > 0 && elementsWall.value3.length > 0)
+    arrObjWall = arrAllPost.filter(ele => ((ele[elementsWall.key1] === elementsWall.value1 || 
+      ele[elementsWall.key2] === elementsWall.value2) && (ele[elementsWall.key3] === elementsWall.value3)));
+  else
+    arrObjWall = arrAllPost.filter(ele => (ele[elementsWall.key1] === elementsWall.value1 || 
+      ele[elementsWall.key2] === elementsWall.value2));
+
+  arrObjWall.forEach((dataPost) => {
+    let colorLikeInit = '';
+    const idPost = dataPost.id;
+    console.log('post.id: ' + idPost);
+
+    const saveNameUserLike = dataPost.likes;
+
+    const detectLike = saveNameUserLike.filter((userLike) => userLike === elementsWall.userConnect);
+    if (detectLike.length > 0) {
+      console.log('Ya DIO LIKE');
+      colorLikeInit = 'background: #de555e;';
+    }
+
+    if (elementsWall.userConnect === dataPost.correoUsuario)
+      itemPost(idPost, dataPost, deletAndEdit(idPost), elementsWall.postWall, colorLikeInit);
+    else itemPost(idPost, dataPost, '', elementsWall.postWall, colorLikeInit);
+
+    const wallComentPost = document.getElementById(`wallComentItemPost_${idPost}`);
+    viewAllCommentPost(wallComentPost, 'Post', idPost);
+  });
+}
+
 const viewAllPost = (postWall, userConnect, postCollection, key1, value1, key2, value2, key3, value3) => {
-  readBDFireStore(postCollection)
-    .onSnapshot((doc) => {
-      const arrPost = [];
-      let objWall = [];
-      postWall.innerHTML = '';
-
-      doc.forEach((ele) => {
-        arrPost.push({ id: ele.id, ...ele.data()});
-      });
-
-      if (key3.length > 0 && value3.length > 0)
-        objWall = arrPost.filter(ele => ((ele[key1] === value1 || ele[key2] === value2) && (ele[key3] === value3)));
-      else
-        objWall = arrPost.filter(ele => (ele[key1] === value1 || ele[key2] === value2));
-  
-      objWall.forEach((dataPost) => {
-        let colorLikeInit = '';
-        const idPost = dataPost.id;
-        console.log('post.id: ' + idPost);
-
-        const saveNameUserLike = dataPost.likes;
-
-        const detectLike = saveNameUserLike.filter((userLike) => userLike === userConnect);
-        if (detectLike.length > 0) {
-          console.log('Ya DIO LIKE');
-          colorLikeInit = 'background: #de555e;';
-        }
-
-        if (userConnect === dataPost.correoUsuario)
-          itemPost(idPost, dataPost, deletAndEdit(idPost), postWall, colorLikeInit);
-        else itemPost(idPost, dataPost, '', postWall, colorLikeInit);
-
-        const wallComentPost = document.getElementById(`wallComentItemPost_${idPost}`);
-        viewAllCommentPost(wallComentPost, 'Post', idPost);
-      });
-    });
+  const elementsWall = {
+    postWall,userConnect,key1,value1,key2,value2,key3,value3
+  }
+  readCollectionBDFireStore(postCollection, getAllPost, elementsWall);
 };
 
 
@@ -465,7 +475,7 @@ export const itemViewPost = (targetID, nameUserConnect) => {
 
           console.log('newArrayLikes: ' + newArrayLikes);
 
-          createBDFireStore('Post', idPost, {likes: newArrayLikes})
+          createIdDocBDFireStore('Post', idPost, {likes: newArrayLikes})
             .then((result) => {
               if (detectLike.length > 0) document.getElementById(targetID).style.backgroundColor = '#FFFFFF';
               else document.getElementById(targetID).style.backgroundColor = '#de555e';

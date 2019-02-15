@@ -1,10 +1,10 @@
 export const createIdDocBDFireStore = (idCollection, idUser, obj) => {
-  return firebase.firestore().collection(idCollection).doc(idUser).set(obj, { merge: true});
-};  
+  return firebase.firestore().collection(idCollection).doc(idUser).set(obj, { merge: true });
+};
 
 export const createPostBDFireStore = (idCollection, obj) => {
   return firebase.firestore().collection(idCollection).add(obj);
-};  
+};
 
 export const readDocBDFireStore = (idCollection, idUser) => {
   return firebase.firestore().collection(idCollection).doc(idUser).get();
@@ -13,7 +13,7 @@ export const readDocBDFireStore = (idCollection, idUser) => {
 export const readCollectionBDFireStore = (idCollection, callbackPost, objElements) => {
   firebase.firestore().collection(idCollection).onSnapshot((dataAllPost) => {
     callbackPost(dataAllPost, objElements);
-   });
+  });
   return 1;
 };
 

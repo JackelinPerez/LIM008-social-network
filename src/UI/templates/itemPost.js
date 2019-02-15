@@ -1,9 +1,10 @@
-export default (idPost, dataPost, deleteEdit, postWall) => {
+export default (idPost, dataPost, deleteEdit, postWall, colorLike) => {
   const divContent = document.createElement('DIV');
   divContent.setAttribute('id', idPost);
   divContent.setAttribute('class', 'grid-item');
 
   const divContent_ = `
+
       <div class="table w-100p">
       <div class="cell ta-l">
         <img id="userPhoto" src="${dataPost.fotoUsuario}" class="avatar-perfil">

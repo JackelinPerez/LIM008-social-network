@@ -29,8 +29,8 @@ export const passwordReset = (email) => {
 };
 
 export const userStateChange = (callbackUser, objElements) => {
-  firebase.auth().onAuthStateChanged((userState) => {
+  return firebase.auth().onAuthStateChanged((userState) => {
     callbackUser(userState, objElements);
   });
-  return 1;
+  // return 1;
 };

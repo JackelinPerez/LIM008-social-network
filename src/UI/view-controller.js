@@ -2,9 +2,10 @@ import itemPost from './templates/itemPost.js';
 import itemCommentPost from './templates/itemCommentPost.js';
 import {
   changeHash, getDayAndHour, objectCreateUserProfile, objectCreatePost,
-  ObjectUpdatePost, deletAndEdit
+  ObjectUpdatePost, deletAndEdit, messageConfirm, objErrMessageFibaseAuth,
+  objErrMessageFibaseAuthSpanish, rgbWithLike, rgbWithoutLike
 } from '../Util/util.js';
-import { messageAuth_1, messageAuth_2, messageAuth_3, messageAuth_4, messageAuth_5 } from '../Util/util.js';
+
 import {
   createUser, authenticateFacebook, authenticateGoogle, logInUser, logOutUser,
   sendEmail, userStateChange, passwordReset
@@ -194,8 +195,8 @@ export const editPost = (userPhoto_, userName_, postType_, titlePost_, descripti
           objDataUser = ObjectUpdatePost(postPrivacyValue, postTypeValue, titlePost_.value, descriptionPost_.value, objdataPost.contenido.multimedia);
 
           // MAIN EDITA POST EN LA BD
-          let confirmUpdate = confirm('Deseas realmente actualizar tus cambios?');
-          if (confirmUpdate === true) {
+          const confirmUpdate = confirm(messageConfirm.editPost);
+          if(confirmUpdate === true) {
             updateDocBDFireStore('Post', idPostGlobal, objDataUser)
               .then(() => {
                 console.log('documento se actualizo correctamente en post');
@@ -257,8 +258,12 @@ const stateUser = (changeUserStatus, elements) => {
     });
 
     elements.buttonDeleteUser.addEventListener('click', () => {
-      deleteUserFireStore('Users', 'Post', userConnect, userConnectName);
-      changeHash('/inite');
+      const confirmUpdate = confirm(messageConfirm.deleteUser);
+      if(confirmUpdate === true) {
+        deleteUserFireStore('Users','Post', userConnect, userConnectName);
+        changeHash('/inite') ;
+        alert('Se elimino correctamente tu cuenta, Esperemos que vuelvas...');
+      }
     });
 
     elements.buttonLogOut.addEventListener('click', () => {
@@ -349,19 +354,20 @@ export const btnAcceptRegisterAndSendToHome = (userName, userEmail, userPassword
               console.log(err.message);
             });
 
-          changeHash('/inite');
-        })
-        .catch((err) => {
-          console.log(err.message);
-          if (err.message === messageAuth_1)
-            alert('Usuario ya existe en la BD, por favor usar otro correo');
-          if (err.message === messageAuth_2)
-            alert('El email tiene un formato incorrecto por favor de verificar si cumple con el formato: ***@***.***');
-          if (err.message === messageAuth_3)
-            alert('Tu contraseña de tener almenos 6 caracteres');
-        });
-    } else {
-      alert('No haz escrito tu nombre de Usuario');
+        changeHash('/inite') ;
+      })
+      .catch((err) => {
+        console.log(err.message);
+        if(err.message === objErrMessageFibaseAuth.messageAuth1)
+        alert(objErrMessageFibaseAuthSpanish.messageAuth1);
+        if(err.message === objErrMessageFibaseAuth.messageAuth2)
+        alert(objErrMessageFibaseAuthSpanish.messageAuth2);
+        if(err.message === (objErrMessageFibaseAuth.messageAuth3 || objErrMessageFibaseAuth.messageAuth31))
+        alert(objErrMessageFibaseAuthSpanish.messageAuth3);
+      });
+    }
+    else {
+      alert(objErrMessageFibaseAuthSpanish.messageAuth0);
     }
   });
 };
@@ -379,12 +385,12 @@ export const btnAcceptLoginAndSendToHome = (inputEmail, inputPassword, buttonAcc
       .then(() => changeHash('/home'))
       .catch((err) => {
         console.log(err.message);
-        if (err.message === messageAuth_2)
-          alert('El email tiene un formato incorrecto por favor de verificar si cumple con el formato: ***@***.***');
-        if (err.message === messageAuth_4)
-          alert('El usuario No esta registrado');
-        if (err.message === messageAuth_5)
-          alert('Tu contraseña es incorrecta');
+        if(err.message === objErrMessageFibaseAuth.messageAuth2)
+        alert(objErrMessageFibaseAuthSpanish.messageAuth2);
+        if(err.message === objErrMessageFibaseAuth.messageAuth4)
+        alert(objErrMessageFibaseAuthSpanish.messageAuth4);
+        if(err.message === objErrMessageFibaseAuth.messageAuth5)
+        alert(objErrMessageFibaseAuthSpanish.messageAuth5);
       });
   });
 
@@ -437,21 +443,19 @@ const getAllPost = (dataAllPost, elementsWall) => {
       ele[elementsWall.key2] === elementsWall.value2));
 
   arrObjWall.forEach((dataPost) => {
-    let colorLikeInit = '';
     const idPost = dataPost.id;
     console.log('post.id: ' + idPost);
 
     const saveNameUserLike = dataPost.likes;
-
+    let detectColor;
     const detectLike = saveNameUserLike.filter((userLike) => userLike === elementsWall.userConnect);
-    if (detectLike.length > 0) {
-      console.log('Ya DIO LIKE');
-      colorLikeInit = 'background: #de555e;';
-    }
+
+    if (detectLike.length > 0) detectColor = rgbWithLike;
+    else detectColor = rgbWithoutLike;
 
     if (elementsWall.userConnect === dataPost.correoUsuario)
-      itemPost(idPost, dataPost, deletAndEdit(idPost), elementsWall.postWall, colorLikeInit);
-    else itemPost(idPost, dataPost, '', elementsWall.postWall, colorLikeInit);
+      itemPost(idPost, dataPost, deletAndEdit(idPost), elementsWall.postWall, detectColor);
+    else itemPost(idPost, dataPost, '', elementsWall.postWall, detectColor);
 
     const wallComentPost = document.getElementById(`wallComentItemPost_${idPost}`);
     viewAllCommentPost(wallComentPost, 'Post', idPost);
@@ -493,8 +497,8 @@ export const itemViewPost = (targetID, nameUserConnect) => {
       const idPost = targetID.substr(('deletePost_').length, targetID.length - ('deletePost_').length);
       const getIdContainerItem = document.getElementById(idPost);
       // MAIN ELIMINA AL POST
-      let confirmDeletePost = confirm('Deseas realmente eliminar el Post?');
-      if (confirmDeletePost === true) {
+      let confirmDeletePost = confirm(messageConfirm.deletePost);
+      if(confirmDeletePost === true){
         deleteDocFireStore('Post', idPost)
           .then(() => {
             postWall.removeChild(getIdContainerItem);
@@ -508,7 +512,8 @@ export const itemViewPost = (targetID, nameUserConnect) => {
     // MAIN CAPTURA EVENTO DE DAR LIKE AL CONTENIDO DEL POST
     else if (targetID.indexOf('likes_') > -1) {
       // logica de likes
-      const idPost = targetID.substr(('likes_').length, targetID.length - ('likes_').length);
+      // const idPost = targetID.substr(('likes_').length, targetID.length - ('likes_').length);
+      const idPost = targetID.substr(('likes_').length, targetID.length);
       console.log('id_likes= ' + idPost);
 
       readDocBDFireStore('Post', idPost)
@@ -532,8 +537,8 @@ export const itemViewPost = (targetID, nameUserConnect) => {
           // MAIN GUARDA O BORRA EL LIKE DEL POST
           createIdDocBDFireStore('Post', idPost, { likes: newArrayLikes })
             .then((result) => {
-              if (detectLike.length > 0) document.getElementById(targetID).style.backgroundColor = '#FFFFFF';
-              else document.getElementById(targetID).style.backgroundColor = '#de555e';
+              if (detectLike.length > 0) document.getElementById(targetID).style.backgroundColor = rgbWithoutLike;
+              else document.getElementById(targetID).style.backgroundColor = rgbWithLike;
             })
             .catch((err) => {
               console.log(err.message);

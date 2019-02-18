@@ -1,4 +1,3 @@
-
 // configurando firebase moc
 const firebasemock = require('firebase-mock');
 const mockauth = new firebasemock.MockFirebase();
@@ -15,16 +14,16 @@ global.firebase = firebasemock.MockFirebaseSdk(
 
 // iniciando test
 
-import { createUser, logInUser, authenticateFacebook, authenticateGoogle, passwordReset,logOutUser } from "../src/lib/authBD/authFireBase.js"
+import { createUser, logInUser, authenticateFacebook, authenticateGoogle, passwordReset, logOutUser, userStateChange } from '../src/lib/authBD/authFireBase.js';
 
-describe('createUser', () =>{
+describe('createUser', () => {
   it('Deberia ser una funcion', () => {
     expect(typeof (createUser)).toBe('function');
   });
   it('Deberia poder crear un nuevo usuario', () => {
     return createUser('mayrat.casavilca@gmail.com', '123456')
       .then((result) => {
-        expect(result.email).toBe('mayrat.casavilca@gmail.com')
+        expect(result.email).toBe('mayrat.casavilca@gmail.com');
       });
   });
 });
@@ -36,7 +35,7 @@ describe('logInUser', () => {
   it('Deberia poder iniciar sesion', () => {
     return logInUser('mayrat.casavilca@gmail', '123456')
       .then((user) => {
-        expect(user.email).toBe('mayrat.casavilca@gmail')
+        expect(user.email).toBe('mayrat.casavilca@gmail');
       });
   });
 });
@@ -58,7 +57,7 @@ describe('authenticateGoogle', () => {
   });
   it('Deberia poder inisiar sesion con Google', () => {
     return authenticateGoogle().then((result) => {
-      expect(typeof result).toBe('object')
+      expect(typeof result).toBe('object');
     });
   });
 });
@@ -71,3 +70,23 @@ describe('logOutUser', () => {
     return logOutUser();
   });
 });
+
+describe('userStateChange', () => {
+  it('Deberia ser una funcion: userStateChange', () => {
+    expect(typeof userStateChange).toBe('function');
+  });
+  
+  // it('Deberia poder saber el estado de coneccion de mi usuario', (done) => {
+  //   return expect(true).toBe(true);
+    // return logInUser('mayrat.casavilca@gmail', '123456')
+    //   .then((user) => {
+    //     console.log('usuario Login: ' + user);
+        
+    //     // userStateChange(callbackUser);
+    //     firebase.auth().onAuthStateChanged((userState) => {
+    //       console.log('usuario conectado: ' + userState);
+    //     });
+    //   });     
+  // });
+});
+

@@ -15,9 +15,9 @@ global.firebase = firebasemock.MockFirebaseSdk(
 
 // iniciando test
 
-import { createUser, logInUser, authenticateFacebook, authenticateGoogle, passwordReset,logOutUser } from "../src/lib/authBD/authFireBase.js"
+import { createUser, logInUser, authenticateFacebook, authenticateGoogle, passwordReset, logOutUser } from "../src/lib/authBD/authFireBase.js"
 
-describe('createUser', () =>{
+describe('createUser', () => {
   it('Deberia ser una funcion', () => {
     expect(typeof (createUser)).toBe('function');
   });

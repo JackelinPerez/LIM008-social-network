@@ -9,12 +9,12 @@ global.firebase = firebasemock.MockFirebaseSdk(
   // use null if your code does not use RTDB
   path => (path ? mockdatabase.child(path) : null),
   () => mockauth,
-  () => mockfirestore
+  () => mockfirestore,
 );
 
 // iniciando test
 
-import { createUser, logInUser, authenticateFacebook, authenticateGoogle, passwordReset, logOutUser, userStateChange } from '../src/lib/authBD/authFireBase.js';
+import { createUser, logInUser, authenticateFacebook, authenticateGoogle, logOutUser} from '../src/lib/authBD/authFireBase.js';
 
 describe('createUser', () => {
   it('Deberia ser una funcion', () => {
@@ -69,24 +69,5 @@ describe('logOutUser', () => {
   it('Deberia poder cerrar sesion', () => {
     return logOutUser();
   });
-});
-
-describe('userStateChange', () => {
-  it('Deberia ser una funcion: userStateChange', () => {
-    expect(typeof userStateChange).toBe('function');
-  });
-  
-  // it('Deberia poder saber el estado de coneccion de mi usuario', (done) => {
-  //   return expect(true).toBe(true);
-    // return logInUser('mayrat.casavilca@gmail', '123456')
-    //   .then((user) => {
-    //     console.log('usuario Login: ' + user);
-        
-    //     // userStateChange(callbackUser);
-    //     firebase.auth().onAuthStateChanged((userState) => {
-    //       console.log('usuario conectado: ' + userState);
-    //     });
-    //   });     
-  // });
 });
 

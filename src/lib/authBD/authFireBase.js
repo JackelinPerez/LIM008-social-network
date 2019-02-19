@@ -20,16 +20,16 @@ export const logOutUser = () => {
   return firebase.auth().signOut();
 };
 
-export const sendEmail = (userRegister, config) => {
-  return userRegister.sendEmailVerification(config);
-};
+// export const sendEmail = (userRegister, config) => {
+//   return userRegister.sendEmailVerification(config);
+// };
 
-export const passwordReset = (email) => {
-  return firebase.auth().sendPasswordResetEmail(email);
-};
+// export const passwordReset = (email) => {
+//   return firebase.auth().sendPasswordResetEmail(email);
+// };
 
-export const userStateChange = (callbackUser, objElements) => {
-  return firebase.auth().onAuthStateChanged((userState) => {
-    callbackUser(userState, objElements);
-  });
-};
+// export const userStateChange = (callbackUser, objElements) => {
+//   return firebase.auth().onAuthStateChanged((userState) => {
+//     callbackUser(userState, objElements);
+//   });
+// };

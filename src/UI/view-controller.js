@@ -4,9 +4,10 @@ import { changeHash, getDayAndHour, objectCreateUserProfile, objectCreatePost,
   ObjectUpdatePost, deletAndEdit, messageConfirm, objErrMessageFibaseAuth,
    objErrMessageFibaseAuthSpanish, rgbWithLike, rgbWithoutLike} from '../Util/util.js';
 
-import { createUser, authenticateFacebook, authenticateGoogle, logInUser, logOutUser,
-  sendEmail, userStateChange, passwordReset} 
+import { createUser, authenticateFacebook, authenticateGoogle, logInUser, logOutUser} 
   from '../lib/authBD/authFireBase.js';
+
+import {sendEmail, passwordReset, userStateChange} from '../lib/authBD/otherAuth.js';
 
 import { createIdDocBDFireStore, createPostBDFireStore, readCollectionBDFireStore, readDocBDFireStore,
   updateDocBDFireStore, deleteUserFireStore, deleteDocFireStore, sendImagePost}
@@ -330,7 +331,7 @@ export const btnAcceptRegisterAndSendToHome = (userName, userEmail, userPassword
         const config = {
           url: 'http://localhost:8887/src'
         };
-          sendEmail(result.user, config)
+          sendEmail(config)
           .then(() => {
             alert(`Se te ha enviado un mensaje de correo electronico:${result.user.email}
             Por favor de verificarlo para terminar con el proceso! Gracias`);

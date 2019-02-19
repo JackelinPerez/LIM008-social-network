@@ -83,7 +83,7 @@ const updatePost = {
 global.firebase = new MockFirebase(fixtureData, {isNaiveSnapshotListenerEnabled: true});
 
 import { createPostBDFireStore, createIdDocBDFireStore,
-   readDocBDFireStore, readCollectionBDFireStore, updateDocBDFireStore, deleteDocFireStore } from '../src/lib/crudBD/crudUser/crudUser.js';
+  readDocBDFireStore, readCollectionBDFireStore, updateDocBDFireStore, deleteDocFireStore } from '../src/lib/crudBD/crudUser/crudUser.js';
 
 describe('createPostBDFireStore', () => {
   it('createPostBDFireStore:  deberia ser una funcion', () => {
@@ -163,14 +163,15 @@ describe('deleteDocFireStore', () => {
   it('deleteDocFireStore: Deberia ser una funcion', () => {
     expect(typeof(deleteDocFireStore)).toBe('function');
   });
-  it('Deberia poder eliminar el post de la bd', () => {
+  it('Deberia poder eliminar el post de la bd', (done) => {
     return deleteDocFireStore('Post', 'pepita6@gmail.com')
-      .then((result) => {
-
-        readDocBDFireStore('Post', 'pepita6@gmail.com')
-          .then((data) => {
-            expect(data._data.__isDeleted_).toBe(undefined);
-          });
+      .then(() => {
+        const callbackPost = (dataCollection) => {
+          const result = dataCollection._data.find((note) => note.id === 'pepita6@gmail.com');
+          expect(result).toBe(undefined);
+          done();
+        };
+        return readCollectionBDFireStore('Post', callbackPost);
       });
   });
 });

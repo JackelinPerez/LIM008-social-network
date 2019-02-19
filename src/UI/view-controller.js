@@ -413,6 +413,16 @@ const viewAllCommentPost = (postWallComment, postCollection, postIdCollection) =
   }
 };
 
+export const getPost = (callback) =>
+  firebase.firestore().collection('Post')
+    .onSnapshot((querySnapshot) => {
+      const data = [];
+      querySnapshot.forEach((doc) => {
+        data.push({ id: doc.id, ...doc.data() })
+      });
+      callback(data);
+}); 
+
 const getAllPost = (dataAllPost, elementsWall) => {
   const arrAllPost = [];
   let arrObjWall = [];

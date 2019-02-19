@@ -97,16 +97,6 @@ export const createPost = (userPhoto, userName, postType, titlePost,
   }
 };
 
-export const getPost = (callback) =>
-  firebase.firestore().collection('Post')
-    .onSnapshot((querySnapshot) => {
-      const data = [];
-      querySnapshot.forEach((doc) => {
-        data.push({ id: doc.id, ...doc.data() });
-      });
-      callback(data);
-    });
-
 export const createCommentPost = (inputComment, wallComentPost, saveCommentPost, closeCommentPost) => {
   console.log('Usuario Conectado comment: ' + userConnect);
   console.log('idPostCommentar: ' + idPostCommentGlobal);

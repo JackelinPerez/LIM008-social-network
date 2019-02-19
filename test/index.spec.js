@@ -2,6 +2,7 @@
 const firebasemock = require('firebase-mock');
 const mockauth = new firebasemock.MockFirebase();
 const mockfirestore = new firebasemock.MockFirestore();
+const mockStorage = new firebasemock.MockStorage;
 mockfirestore.autoFlush();
 mockauth.autoFlush();
 
@@ -9,12 +10,14 @@ global.firebase = firebasemock.MockFirebaseSdk(
   // use null if your code does not use RTDB
   path => (path ? mockdatabase.child(path) : null),
   () => mockauth,
-  () => mockfirestore
+  () => mockfirestore,
+  () => mockStorage 
 );
 
 // iniciando test
 
 import { createUser, logInUser, authenticateFacebook, authenticateGoogle, passwordReset, logOutUser, userStateChange } from '../src/lib/authBD/authFireBase.js';
+import { sendImagePost} from '../src/lib/crudBD/crudUser/crudUser.js';
 
 describe('createUser', () => {
   it('Deberia ser una funcion', () => {
@@ -55,7 +58,7 @@ describe('authenticateGoogle', () => {
   it('Deberia ser una funcion', () => {
     expect(typeof (authenticateGoogle)).toBe('function');
   });
-  it('Deberia poder inisiar sesion con Google', () => {
+  it('Deberia poder iniciar sesion con Google', () => {
     return authenticateGoogle().then((result) => {
       expect(typeof result).toBe('object');
     });
@@ -73,7 +76,7 @@ describe('logOutUser', () => {
 
 describe('userStateChange', () => {
   it('Deberia ser una funcion: userStateChange', () => {
-    expect(typeof userStateChange).toBe('function');
+    expect(typeof (userStateChange)).toBe('function');
   });
   
   // it('Deberia poder saber el estado de coneccion de mi usuario', (done) => {
@@ -89,4 +92,11 @@ describe('userStateChange', () => {
     //   });     
   // });
 });
+
+describe('sendImagePost', () => {
+it('Deberia ser una función: sendImagePost', () => {
+  expect(typeof sendImagePost).toBe('function');
+});
+});
+
 

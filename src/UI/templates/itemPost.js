@@ -4,7 +4,6 @@ export default (idPost, dataPost, deleteEdit, postWall, colorLike) => {
   divContent.setAttribute('class', 'grid-item');
 
   const divContent_ = `
-
       <div class="table w-100p">
       <div class="cell ta-l">
         <img id="userPhoto" src="${dataPost.fotoUsuario}" class="avatar-perfil">
@@ -43,7 +42,7 @@ export default (idPost, dataPost, deleteEdit, postWall, colorLike) => {
     </div>
 
     <div class="cont-icon">
-      <span id="likes_${idPost}" class="cursor mr-5">
+      <span id="likes_${idPost}" class="cursor mr-5" style="background-color:${colorLike}">
         <i class="icon-like"></i>
         ${dataPost.likes.length} Likes
       </span>

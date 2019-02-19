@@ -32,5 +32,4 @@ export const userStateChange = (callbackUser, objElements) => {
   return firebase.auth().onAuthStateChanged((userState) => {
     callbackUser(userState, objElements);
   });
-  // return 1;
 };

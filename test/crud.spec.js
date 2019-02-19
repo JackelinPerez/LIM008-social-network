@@ -83,7 +83,8 @@ const updatePost = {
 global.firebase = new MockFirebase(fixtureData, {isNaiveSnapshotListenerEnabled: true});
 
 import { createPostBDFireStore, createIdDocBDFireStore,
-  readDocBDFireStore, readCollectionBDFireStore, updateDocBDFireStore, deleteDocFireStore } from '../src/lib/crudBD/crudUser/crudUser.js';
+  readDocBDFireStore, readCollectionBDFireStore, filterCollectionBy, updateDocBDFireStore,
+  deleteDocFireStore } from '../src/lib/crudBD/crudUser/crudUser.js';
 
 describe('createPostBDFireStore', () => {
   it('createPostBDFireStore:  deberia ser una funcion', () => {
@@ -92,11 +93,8 @@ describe('createPostBDFireStore', () => {
   it('Deberia agregar un post con ID aleatorio', () => {
     return createPostBDFireStore('Post', createPost)
       .then((result) => {
-        console.log(result.id);
-            
         readDocBDFireStore('Post', result.id)
           .then((data) => {
-            console.log(data._data.nombreUsuario);
             expect(data._data.nombreUsuario).toBe('pepita5');
           });
       });
@@ -110,13 +108,22 @@ describe('createIdDocBDFireStore', () => {
   it('Deberia poder crear un post con ID ingresado', () => {
     return createIdDocBDFireStore('Post', 'pepita6@gmail.com', createPostID)
       .then((result) => {
-        console.log(result);
-
         readDocBDFireStore('Post', 'pepita6@gmail.com')
           .then((data) => {
-            console.log(data._data.nombreUsuario);
             expect(data._data.nombreUsuario).toBe('pepita6');
           });
+      });
+  });
+});
+
+describe('filterCollectionBy', () => {
+  it('filterCollectionBy: Deberia ser una funcion', () => {
+    expect(typeof(filterCollectionBy)).toBe('function');
+  });
+  it('Deberia poder obtener un arreglo de todos los post de  pepita6@gmail.com', () => {
+    return filterCollectionBy('Post', 'correoUsuario', 'pepita6')
+      .then((result) => {
+        expect(typeof(result)).toBe('object');
       });
   });
 });
@@ -127,12 +134,9 @@ describe('updateDocBDFireStore', () => {
   });
   it('Deberia poder actualizar los datos del post', () => {
     return updateDocBDFireStore('Post', 'pepita6@gmail.com', updatePost)
-      .then((result) => {
-        console.log(result);
-
+      .then(() => {
         readDocBDFireStore('Post', 'pepita6@gmail.com')
           .then((data) => {
-            console.log(data._data.nombreUsuario);
             expect(data._data.privacidad).toBe('privado');
           });
       });

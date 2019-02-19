@@ -6,7 +6,6 @@ mockfirestore.autoFlush();
 mockauth.autoFlush();
 
 global.firebase = firebasemock.MockFirebaseSdk(
-  // use null if your code does not use RTDB
   path => (path ? mockdatabase.child(path) : null),
   () => mockauth,
   () => mockfirestore,
@@ -14,16 +13,17 @@ global.firebase = firebasemock.MockFirebaseSdk(
 
 // iniciando test
 
-import { createUser, logInUser, authenticateFacebook, authenticateGoogle, logOutUser} from '../src/lib/authBD/authFireBase.js';
+import { createUser, logInUser, authenticateFacebook, authenticateGoogle,
+  logOutUser, deleteUser} from '../src/lib/authBD/authFireBase.js';
 
 describe('createUser', () => {
   it('Deberia ser una funcion', () => {
     expect(typeof (createUser)).toBe('function');
   });
   it('Deberia poder crear un nuevo usuario', () => {
-    return createUser('mayrat.casavilca@gmail.com', '123456')
+    return createUser('pepita6@gmail.com', '123456')
       .then((result) => {
-        expect(result.email).toBe('mayrat.casavilca@gmail.com');
+        expect(result.email).toBe('pepita6@gmail.com');
       });
   });
 });
@@ -62,6 +62,23 @@ describe('authenticateGoogle', () => {
   });
 });
 
+describe('deleteUser', () => {
+  it('deleteUser: Deberia ser una funcion', () => {
+    expect(typeof(deleteUser)).toBe('function');
+  });
+  it('Deberia poder eliminar el post de la fireAuth', () => {
+    
+    createUser('pepita55555@gmail', '123456')
+      .then((user) => {
+        expect(user.email).toBe('pepita55555@gmail');
+        deleteUser()
+          .then(() => {
+            expect(user.email).toBe(undefined);
+          });
+      });
+  });
+});
+
 describe('logOutUser', () => {
   it('Deberia ser una funcion', () => {
     expect(typeof (logOutUser)).toBe('function');
@@ -70,4 +87,3 @@ describe('logOutUser', () => {
     return logOutUser();
   });
 });
-

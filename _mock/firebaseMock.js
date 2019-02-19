@@ -1,5 +1,3 @@
-import { callbackify } from 'util';
-
 const auth = () => {
   return {
     currentUser: {
@@ -14,19 +12,32 @@ const auth = () => {
         resolve('se envio un mensaje de correo electronico para cambiar tu contraseña');
       });
     },
-    // onAuthStateChanged: (userState) => {
-    //   userState = (state) => {
-    //     const stateAux = {
-    //       email: 'pepita5@gmail.com',
-    //     };
-    //     state = stateAux;
-    //   };
-    // }
+    onAuthStateChanged: (userState) => {
+      userState('usuario conectado');
+    }
   };
 };
 
+const storage = () => {
+  return {
+     ref: () => {
+       return {
+         child: (createDirectoryImg) => {
+          return {
+            put: (img) => {
+              return new Promise((resolve) => {
+                resolve('Devuelve un objeto con una nueva URL');
+              });
+            }
+          }
+         }
+       }
+     }
+  }
+}
 const firebase = {
   auth,
+  storage,
 };
 
 export default jest.fn(() => {

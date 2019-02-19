@@ -11,3 +11,7 @@ export const userStateChange = (callbackUser, objElements) => {
     callbackUser(userState, objElements);
   });
 };
+
+export const sendImagePost = (imageASubir) => {
+  return firebase.storage().ref().child('images/' + imageASubir.name).put(imageASubir);
+};

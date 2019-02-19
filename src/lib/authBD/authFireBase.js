@@ -20,17 +20,7 @@ export const logOutUser = () => {
   return firebase.auth().signOut();
 };
 
-export const sendEmail = (userRegister, config) => {
-  return userRegister.sendEmailVerification(config);
+export const deleteUser = () => {
+  return firebase.auth().currentUser.delete();
 };
 
-export const passwordReset = (email) => {
-  return firebase.auth().sendPasswordResetEmail(email);
-};
-
-export const userStateChange = (callbackUser, objElements) => {
-  firebase.auth().onAuthStateChanged((userState) => {
-    callbackUser(userState, objElements);
-  });
-  return 1;
-};

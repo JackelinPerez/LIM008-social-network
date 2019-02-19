@@ -1,4 +1,3 @@
-
 // configurando firebase moc
 const firebasemock = require('firebase-mock');
 const mockauth = new firebasemock.MockFirebase();
@@ -7,24 +6,24 @@ mockfirestore.autoFlush();
 mockauth.autoFlush();
 
 global.firebase = firebasemock.MockFirebaseSdk(
-  // use null if your code does not use RTDB
   path => (path ? mockdatabase.child(path) : null),
   () => mockauth,
-  () => mockfirestore
+  () => mockfirestore,
 );
 
 // iniciando test
 
-import { createUser, logInUser, authenticateFacebook, authenticateGoogle, passwordReset,logOutUser } from "../src/lib/authBD/authFireBase.js"
+import { createUser, logInUser, authenticateFacebook, authenticateGoogle,
+  logOutUser, deleteUser} from '../src/lib/authBD/authFireBase.js';
 
-describe('createUser', () =>{
+describe('createUser', () => {
   it('Deberia ser una funcion', () => {
     expect(typeof (createUser)).toBe('function');
   });
   it('Deberia poder crear un nuevo usuario', () => {
-    return createUser('mayrat.casavilca@gmail.com', '123456')
+    return createUser('pepita6@gmail.com', '123456')
       .then((result) => {
-        expect(result.email).toBe('mayrat.casavilca@gmail.com')
+        expect(result.email).toBe('pepita6@gmail.com');
       });
   });
 });
@@ -36,7 +35,7 @@ describe('logInUser', () => {
   it('Deberia poder iniciar sesion', () => {
     return logInUser('mayrat.casavilca@gmail', '123456')
       .then((user) => {
-        expect(user.email).toBe('mayrat.casavilca@gmail')
+        expect(user.email).toBe('mayrat.casavilca@gmail');
       });
   });
 });
@@ -58,8 +57,25 @@ describe('authenticateGoogle', () => {
   });
   it('Deberia poder inisiar sesion con Google', () => {
     return authenticateGoogle().then((result) => {
-      expect(typeof result).toBe('object')
+      expect(typeof result).toBe('object');
     });
+  });
+});
+
+describe('deleteUser', () => {
+  it('deleteUser: Deberia ser una funcion', () => {
+    expect(typeof(deleteUser)).toBe('function');
+  });
+  it('Deberia poder eliminar el post de la fireAuth', () => {
+    
+    createUser('pepita55555@gmail', '123456')
+      .then((user) => {
+        expect(user.email).toBe('pepita55555@gmail');
+        deleteUser()
+          .then(() => {
+            expect(user.email).toBe(undefined);
+          });
+      });
   });
 });
 
